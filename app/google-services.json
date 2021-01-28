@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "536671412186",
+    "project_id": "minderapp-ca8ba",
+    "storage_bucket": "minderapp-ca8ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536671412186:android:9cdddc2849500889f32ae3",
+        "android_client_info": {
+          "package_name": "com.technovation.sagetech.minder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536671412186-s74psb0h4p8siqpsdius7qb90ca4ddfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBANHd4FeWmlOPDsxuCN6CRI4P9yG6g7H8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536671412186-s74psb0h4p8siqpsdius7qb90ca4ddfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
