@@ -18,13 +18,13 @@
         android:src="@mipmap/ic_launcher" />
 
     <EditText
-        android:id="@+id/user_name"
+        android:id="@+id/photo_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
-        android:hint="Enter Your Name"
+        android:hint="Enter Photo Name"
         android:inputType="textPersonName"
         android:textColor="#000"
         android:textStyle="bold" />
@@ -41,4 +41,9 @@
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="350dp"
+        android:layout_height="500dp" />
 </LinearLayout>

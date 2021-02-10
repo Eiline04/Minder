@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,12 +45,12 @@ import id.zelory.compressor.Compressor;
 public class StoreUserData extends AppCompatActivity {
 
     private ImageView userImage;
-    private EditText userName;
+    private EditText photoName;
     private Button submit;
 
-    //Variables for the images
     private ProgressDialog progressDialog;
-    private Uri imageUri = null;
+    //Variables for the images
+    public Uri imageUri = null;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -61,7 +63,7 @@ public class StoreUserData extends AppCompatActivity {
         setContentView(R.layout.activity_store_user_data);
 
         userImage = findViewById(R.id.user_image);
-        userName = findViewById(R.id.user_name);
+        photoName = findViewById(R.id.photo_name);
         submit = findViewById(R.id.submit);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -77,80 +79,81 @@ public class StoreUserData extends AppCompatActivity {
         //-------------Choose the image from the phone--------------
 
         userImage.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
-                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                                                 if (ContextCompat.checkSelfPermission(StoreUserData.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(StoreUserData.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                                                     Toast.makeText(StoreUserData.this, "Nu există permisiune", Toast.LENGTH_LONG).show();
-                                                     ActivityCompat.requestPermissions(StoreUserData.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                        Toast.makeText(StoreUserData.this, "Nu există permisiune", Toast.LENGTH_LONG).show();
+                        ActivityCompat.requestPermissions(StoreUserData.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
-                                                 } else {
-                                                     chooseImage();
-                                                 }
+                    } else {
+                        chooseImage();
+                    }
 
-                                             } else {
-                                                 chooseImage();
-                                             }
+                } else {
+                    chooseImage();
+                }
 
-                                         }
+            }
 
-                                     });
+        });
 
         //------------------Store the data in Firebase------------
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            progressDialog.setMessage("Se salvează datele...");
-            progressDialog.show();
+                progressDialog.setMessage("Se salvează datele...");
+                progressDialog.show();
 
-            final String username = userName.getText().toString();
+                final String photo_name = photoName.getText().toString();
 
-            if(!TextUtils.isEmpty(username) && imageUri != null){
+                if (!TextUtils.isEmpty(photo_name) && imageUri != null) {
 
-                File newFile = new File(imageUri.getPath());
-                try {
-                    compressed = new Compressor(StoreUserData.this)
-                                  .setMaxHeight(125)
-                                  .setMaxWidth(125)
-                                  .setQuality(50)
-                                  .compressToBitmap(newFile);
+                    File newFile = new File(imageUri.getPath());
+                    try {
+                        compressed = new Compressor(StoreUserData.this)
+                                .setMaxHeight(125)
+                                .setMaxWidth(125)
+                                .setQuality(50)
+                                .compressToBitmap(newFile);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                compressed.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-                byte[] thumb = byteArrayOutputStream.toByteArray();
-
-
-                //!!!!!
-                UploadTask image_path = storageReference.child("user_image").child(user_id+"jpg").putBytes(thumb);
-
-                image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                        if(task.isSuccessful()){
-
-                            storeUserData(task, username);
-
-                        }else{
-                            String error = task.getException().getMessage();
-                            Toast.makeText(StoreUserData.this, "(Eroare): " + error, Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
-                        }
-
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    compressed.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                    byte[] thumb = byteArrayOutputStream.toByteArray();
 
 
-            }else{
-                Toast.makeText(StoreUserData.this, "Completați câmpul cu numele", Toast.LENGTH_SHORT).show();
-            }
+                    //!!!!!
+                    //UploadTask image_path = storageReference.child("user_image").child(user_id+".jpg").child(photo_name+".jpg").putBytes(thumb);
+                    UploadTask image_path = storageReference.child("user_image").child(user_id).child(photo_name + ".jpg").putBytes(thumb);
+
+                    image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                            if (task.isSuccessful()) {
+
+                                storeUserData(task, photo_name);
+
+                            } else {
+                                String error = task.getException().getMessage();
+                                Toast.makeText(StoreUserData.this, "(Eroare): " + error, Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
+                            }
+
+                        }
+                    });
+
+
+                } else {
+                    Toast.makeText(StoreUserData.this, "Completați câmpul cu numele", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -158,33 +161,34 @@ public class StoreUserData extends AppCompatActivity {
 
     }
 
-    private void storeUserData(Task<UploadTask.TaskSnapshot> task, String username) {
+    private void storeUserData(Task<UploadTask.TaskSnapshot> task, String photoName) {
 
         Uri download_uri;
-        if(task!=null){
+        if (task != null) {
             download_uri = task.getResult().getDownloadUrl();
-        }else{
+        } else {
             download_uri = imageUri;
         }
 
 
         //---!!!!!------------------Se face asocierea dintre nume si poza!
-        Map<String,String> userData = new HashMap<>();
-        userData.put(username, download_uri.toString());
+        Map<String, String> userData = new HashMap<>();
+        userData.put(photoName, download_uri.toString());
 
         //----!!Colectia------------------------
-        firebaseFirestore.collection("Users").document(user_id).collection("NumePersoane").document().set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseFirestore.collection("Users").document(user_id).set(userData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
                     progressDialog.dismiss();
-                    Toast.makeText(StoreUserData.this,"Datele au fost salvate cu succes",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(StoreUserData.this, MainActivity.class));
+                    Toast.makeText(StoreUserData.this, "Datele au fost salvate cu succes", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(StoreUserData.this, StoreUserData.class));
+                    userImage.setImageResource(R.drawable.ic_launcher_background);
 
-                }else{
-                    Toast.makeText(StoreUserData.this,"Firestore Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(StoreUserData.this, "Firestore Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -218,4 +222,9 @@ public class StoreUserData extends AppCompatActivity {
 
         }
     }
+
+    /*---------This functions returns the Image Uri------------------
+    public String returnUri() {
+        return imageUri.toString();
+    }*/
 }
