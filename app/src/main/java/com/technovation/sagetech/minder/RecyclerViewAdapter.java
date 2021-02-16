@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.technovation.sagetech.minder.authentication.StoreUserData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 

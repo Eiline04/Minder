@@ -36,6 +36,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
     private ImageView imageView;
    // private HashMap<String,Object> hm;
     private ArrayList<StoreUserData> mList;
+    private StoreUserData aux;
 
     private RecyclerViewAdapter adapter;
 
@@ -69,7 +70,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
         progressDialog.setMessage("Va rugam sa asteptati...");
         progressDialog.show();
 
-        firebaseFirestore.collection("Users").document(user_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+       /* firebaseFirestore.collection("Users").document(user_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
@@ -91,6 +92,31 @@ public class ShowPhotoActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(ShowPhotoActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                        // Log.d( e.toString());
+            }
+        });*/
+
+        firebaseFirestore.collection("Users").document(user_id).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(ShowPhotoActivity.this,"Eroare ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Map<String, Object> photo = documentSnapshot.getData();
+
+                    for(String i : photo.keySet()){
+
+
+
+                    }
+
+                } else {
+                    Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
