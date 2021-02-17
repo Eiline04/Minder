@@ -1,4 +1,4 @@
- package com.technovation.sagetech.minder;
+ package com.technovation.sagetech.minder.recycler_photo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,15 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.technovation.sagetech.minder.R;
 
 import java.util.ArrayList;
 
  public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private ArrayList<Model> mList;
+    private ArrayList<RecyclerModel> mList;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Model> mList){
+    public RecyclerViewAdapter(Context context, ArrayList<RecyclerModel> mList){
 
         this.context = context;
         this.mList = mList;

@@ -28,10 +28,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.technovation.sagetech.minder.MainActivity;
-import com.technovation.sagetech.minder.Model;
 import com.technovation.sagetech.minder.R;
-import com.technovation.sagetech.minder.ShowPhotoActivity;
+import com.technovation.sagetech.minder.recycler_photo.ShowPhotoActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

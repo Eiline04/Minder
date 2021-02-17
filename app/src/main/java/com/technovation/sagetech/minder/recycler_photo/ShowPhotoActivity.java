@@ -1,4 +1,4 @@
-package com.technovation.sagetech.minder;
+package com.technovation.sagetech.minder.recycler_photo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.technovation.sagetech.minder.authentication.StoreUserData;
+import com.technovation.sagetech.minder.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,18 +26,20 @@ public class ShowPhotoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView photoName;
     private ImageView imageView;
-    private ArrayList<Model> mList;
+    private ArrayList<RecyclerModel> mList;
 
     private RecyclerViewAdapter adapter;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    private ProgressDialog progressDialog = new ProgressDialog(this);
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.show_photo);
+
 
         recyclerView = findViewById(R.id.show_recyclerView);
         imageView = findViewById(R.id.m_image);
@@ -54,63 +56,10 @@ public class ShowPhotoActivity extends AppCompatActivity {
         adapter = new RecyclerViewAdapter(this,mList);
         recyclerView.setAdapter(adapter);
 
+        progressDialog = new ProgressDialog(this);
+
         progressDialog.setMessage("Va rugam sa asteptati...");
         progressDialog.show();
-
-       /* firebaseFirestore.collection("Users").document(user_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    Map<String, Object> photo = documentSnapshot.getData();
-                    for( String i : photo.keySet()) {
-                        photoName.setText("Nume: " + i);
-                        //imageView.setImageResource();
-                        //mList.add();
-                    }
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(ShowPhotoActivity.this, "Document does not exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ShowPhotoActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                       // Log.d( e.toString());
-            }
-        });
-
-
-        ------------------------Sunt in total 3 variante, pentru ca nu stiu exact care e buna-----------------------
-
-        firebaseFirestore.collection("Users").document(user_id).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    Toast.makeText(ShowPhotoActivity.this,"Eroare ", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (documentSnapshot != null && documentSnapshot.exists()) {
-                    Map<String, Object> photo = documentSnapshot.getData();
-
-                    for(String i : photo.keySet()){
-
-
-
-                    }
-
-                } else {
-                    Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        */
-
 
         firebaseFirestore.collection("Users").document(user_id).get().
                 addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -122,6 +71,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             if(task.getResult().exists()){
 
+
                                HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
                                //ArrayList<String > key = new ArrayList<>();
                                //ArrayList<String> value = new ArrayList<>();
@@ -131,11 +81,10 @@ public class ShowPhotoActivity extends AppCompatActivity {
                                   // key.set(index, stringKey);
                                    //value.set(index, (String) dbData.get(stringKey));
 
-                                   Model model = (Model) dbData.get(stringKey);
-                                   mList.add(model);
+                                   String modelUrl = (String) dbData.get(stringKey);
+                                   mList.add(new RecyclerModel(stringKey, modelUrl));
 
                                   // mList.add(value.get(index));
-
                                    //index++;
                                }
                                 adapter.notifyDataSetChanged();
@@ -144,8 +93,6 @@ public class ShowPhotoActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
                         }
-
-
 
                     }
                 });
