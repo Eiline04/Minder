@@ -37,9 +37,9 @@ public class ShowPhotoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_user_data);
+        setContentView(R.layout.show_photo);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.show_recyclerView);
         imageView = findViewById(R.id.m_image);
         photoName = findViewById(R.id.photoName_TextView);
 
@@ -123,20 +123,20 @@ public class ShowPhotoActivity extends AppCompatActivity {
                             if(task.getResult().exists()){
 
                                HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
-                               ArrayList<String > key = new ArrayList<>();
-                               ArrayList<String> value = new ArrayList<>();
-                               int index = 0;
+                               //ArrayList<String > key = new ArrayList<>();
+                               //ArrayList<String> value = new ArrayList<>();
+                               //int index = 0;
 
                                for(String stringKey : dbData.keySet()){
-                                   key.set(index, stringKey);
-                                   value.set(index, (String) dbData.get(stringKey));
+                                  // key.set(index, stringKey);
+                                   //value.set(index, (String) dbData.get(stringKey));
 
                                    Model model = (Model) dbData.get(stringKey);
                                    mList.add(model);
 
                                   // mList.add(value.get(index));
 
-                                   index++;
+                                   //index++;
                                }
                                 adapter.notifyDataSetChanged();
                             }

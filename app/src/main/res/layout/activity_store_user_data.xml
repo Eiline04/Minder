@@ -42,8 +42,12 @@
         android:textColor="#fff"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="350dp"
-        android:layout_height="500dp" />
+    <Button
+        android:id="@+id/show_Allphoto"
+        android:layout_width="122dp"
+        android:layout_height="62dp"
+        android:text="Imagini incarcate"
+        android:layout_margin="20dp"/>
+
+
 </LinearLayout>

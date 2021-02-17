@@ -28,8 +28,10 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.Model;
 import com.technovation.sagetech.minder.R;
+import com.technovation.sagetech.minder.ShowPhotoActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -45,7 +47,7 @@ public class StoreUserData extends AppCompatActivity {
 
     private ImageView userImage;
     private EditText photoName;
-    private Button submit;
+    private Button submit, showAllBtn;
 
     private ProgressDialog progressDialog;
     //Variables for the images
@@ -64,6 +66,7 @@ public class StoreUserData extends AppCompatActivity {
         userImage = findViewById(R.id.user_image);
         photoName = findViewById(R.id.photo_name);
         submit = findViewById(R.id.submit);
+        showAllBtn = findViewById(R.id.show_Allphoto);
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -74,27 +77,24 @@ public class StoreUserData extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
+        showAllBtn.setOnClickListener(v -> startActivity( new Intent(StoreUserData.this , ShowPhotoActivity.class)));
 
         //-------------Choose the image from the phone--------------
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        userImage.setOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                    if (ContextCompat.checkSelfPermission(StoreUserData.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(StoreUserData.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                        Toast.makeText(StoreUserData.this, "Nu există permisiune", Toast.LENGTH_LONG).show();
-                        ActivityCompat.requestPermissions(StoreUserData.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
-                    } else {
-                        chooseImage();
-                    }
+                    Toast.makeText(StoreUserData.this, "Nu există permisiune", Toast.LENGTH_LONG).show();
+                    ActivityCompat.requestPermissions(StoreUserData.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
                 } else {
                     chooseImage();
                 }
 
+            } else {
+                chooseImage();
             }
 
         });
@@ -165,7 +165,7 @@ public class StoreUserData extends AppCompatActivity {
         if (task != null) {
             download_uri = task.getResult().getDownloadUrl();
         } else {
-            download_uri = getImageUri(); // imageUri
+            download_uri = imageUri; // imageUri getImageUri()
         }
 
 
@@ -183,8 +183,8 @@ public class StoreUserData extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     Toast.makeText(StoreUserData.this, "Datele au fost salvate cu succes", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(StoreUserData.this, StoreUserData.class));
-                    userImage.setImageResource(R.drawable.ic_launcher_background);
+                    //startActivity(new Intent(StoreUserData.this, StoreUserData.class));
+                    //userImage.setImageResource(R.drawable.ic_launcher_background);
 
                 } else {
                     Toast.makeText(StoreUserData.this, "Firestore Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -209,8 +209,7 @@ public class StoreUserData extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
-                imageUri = data.getData();
-                //setImageUri(result.getUri());
+                imageUri = result.getUri();
                 userImage.setImageURI(imageUri);
 
 
@@ -235,8 +234,4 @@ public class StoreUserData extends AppCompatActivity {
         this.imageUri = imageUri;
     }
 
-    /*---------This functions returns the Image Uri------------------
-    public String returnUri() {
-        return imageUri.toString();
-    }*/
 }
