@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.technovation.sagetech.minder.MainActivity;
+import com.technovation.sagetech.minder.Model;
 import com.technovation.sagetech.minder.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -50,7 +49,7 @@ public class StoreUserData extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     //Variables for the images
-    public Uri imageUri = null;
+    private Uri imageUri = null;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -110,9 +109,9 @@ public class StoreUserData extends AppCompatActivity {
 
                 final String photo_name = photoName.getText().toString();
 
-                if (!TextUtils.isEmpty(photo_name) && imageUri != null) {
+                if (!TextUtils.isEmpty(photo_name) && getImageUri() != null) {
 
-                    File newFile = new File(imageUri.getPath());
+                    File newFile = new File(getImageUri().getPath());
                     try {
                         compressed = new Compressor(StoreUserData.this)
                                 .setMaxHeight(125)
@@ -130,7 +129,6 @@ public class StoreUserData extends AppCompatActivity {
 
 
                     //!!!!!
-                    //UploadTask image_path = storageReference.child("user_image").child(user_id+".jpg").child(photo_name+".jpg").putBytes(thumb);
                     UploadTask image_path = storageReference.child("user_image").child(user_id).child(photo_name + ".jpg").putBytes(thumb);
 
                     image_path.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -167,13 +165,14 @@ public class StoreUserData extends AppCompatActivity {
         if (task != null) {
             download_uri = task.getResult().getDownloadUrl();
         } else {
-            download_uri = imageUri;
+            download_uri = getImageUri(); // imageUri
         }
 
 
         //---!!!!!------------------Se face asocierea dintre nume si poza!
         Map<String, String> userData = new HashMap<>();
         userData.put(photoName, download_uri.toString());
+        Model model = new Model(download_uri.toString());
 
         //----!!Colectia------------------------
         firebaseFirestore.collection("Users").document(user_id).set(userData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -210,7 +209,8 @@ public class StoreUserData extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
-                imageUri = result.getUri();
+                imageUri = data.getData();
+                //setImageUri(result.getUri());
                 userImage.setImageURI(imageUri);
 
 
@@ -221,6 +221,18 @@ public class StoreUserData extends AppCompatActivity {
             }
 
         }
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public String getImgStringUri(){
+        return imageUri.toString();
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 
     /*---------This functions returns the Image Uri------------------

@@ -40,7 +40,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAth = FirebaseAuth.getInstance();
 
-
         //-------------Go to LoginActivity----------------
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,44 +6,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.technovation.sagetech.minder.authentication.StoreUserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ShowPhotoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TextView photoName;
     private ImageView imageView;
-   // private HashMap<String,Object> hm;
-    private ArrayList<StoreUserData> mList;
-    private StoreUserData aux;
+    private ArrayList<Model> mList;
 
     private RecyclerViewAdapter adapter;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    //private DocumentReference firebaseFirestore = FirebaseFirestore.getInstance()
-          //  .collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
     private ProgressDialog progressDialog = new ProgressDialog(this);
 
     @Override
@@ -62,8 +50,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
         String user_id = firebaseAuth.getCurrentUser().getUid();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        //hm = new HashMap<>();
-        mList= new ArrayList<StoreUserData>();
+        mList= new ArrayList<>();
         adapter = new RecyclerViewAdapter(this,mList);
         recyclerView.setAdapter(adapter);
 
@@ -93,7 +80,10 @@ public class ShowPhotoActivity extends AppCompatActivity {
                         Toast.makeText(ShowPhotoActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                        // Log.d( e.toString());
             }
-        });*/
+        });
+
+
+        ------------------------Sunt in total 3 variante, pentru ca nu stiu exact care e buna-----------------------
 
         firebaseFirestore.collection("Users").document(user_id).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -119,9 +109,46 @@ public class ShowPhotoActivity extends AppCompatActivity {
 
             }
         });
+        */
 
 
-////Toast.makeText(ShowPhotoActivity.this,"Eroare "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        firebaseFirestore.collection("Users").document(user_id).get().
+                addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if(task.isSuccessful()){
+
+                            progressDialog.dismiss();
+                            if(task.getResult().exists()){
+
+                               HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
+                               ArrayList<String > key = new ArrayList<>();
+                               ArrayList<String> value = new ArrayList<>();
+                               int index = 0;
+
+                               for(String stringKey : dbData.keySet()){
+                                   key.set(index, stringKey);
+                                   value.set(index, (String) dbData.get(stringKey));
+
+                                   Model model = (Model) dbData.get(stringKey);
+                                   mList.add(model);
+
+                                  // mList.add(value.get(index));
+
+                                   index++;
+                               }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        }else{
+                            Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                    }
+                });
     }
 
 

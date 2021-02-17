@@ -1,7 +1,6 @@
-package com.technovation.sagetech.minder;
+ package com.technovation.sagetech.minder;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.technovation.sagetech.minder.authentication.StoreUserData;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private ArrayList<StoreUserData> mList;
+    private ArrayList<Model> mList;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, ArrayList<StoreUserData> mList){
+    public RecyclerViewAdapter(Context context, ArrayList<Model> mList){
 
         this.context = context;
         this.mList = mList;
@@ -38,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Glide.with(context).load(mList.get(position).imageUri).into(holder.imageView);
+        Glide.with(context).load(mList.get(position).getImageUrl()).into(holder.imageView);
 
     }
 
