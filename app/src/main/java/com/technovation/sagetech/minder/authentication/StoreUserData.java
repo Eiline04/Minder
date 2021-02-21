@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyboardShortcutGroup;
+import android.view.KeyboardShortcutInfo;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +46,7 @@ import id.zelory.compressor.Compressor;
 public class StoreUserData extends AppCompatActivity {
 
     private ImageView userImage;
-    private EditText photoName;
+    private EditText photoNameEditText;
     private Button submit, showAllBtn;
 
     private ProgressDialog progressDialog;
@@ -62,7 +64,7 @@ public class StoreUserData extends AppCompatActivity {
         setContentView(R.layout.activity_store_user_data);
 
         userImage = findViewById(R.id.user_image);
-        photoName = findViewById(R.id.photo_name);
+        photoNameEditText = findViewById(R.id.photo_name);
         submit = findViewById(R.id.submit);
         showAllBtn = findViewById(R.id.show_Allphoto);
 
@@ -105,7 +107,7 @@ public class StoreUserData extends AppCompatActivity {
                 progressDialog.setMessage("Se salvează datele...");
                 progressDialog.show();
 
-                final String photo_name = photoName.getText().toString();
+                final String photo_name = photoNameEditText.getText().toString();
 
                 if (!TextUtils.isEmpty(photo_name) && getImageUri() != null) {
 
@@ -181,8 +183,10 @@ public class StoreUserData extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     Toast.makeText(StoreUserData.this, "Datele au fost salvate cu succes", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(StoreUserData.this, StoreUserData.class));
-                    //userImage.setImageResource(R.drawable.ic_launcher_background);
+
+                    userImage.setImageResource(R.drawable.ic_launcher_background);
+                    photoNameEditText.setText(null);
+                    photoNameEditText.setHint("Denumirea pozei");
 
                 } else {
                     Toast.makeText(StoreUserData.this, "Firestore Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
