@@ -30,6 +30,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.recycler_photo.ShowPhotoActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -47,7 +48,7 @@ public class StoreUserData extends AppCompatActivity {
 
     private ImageView userImage;
     private EditText photoNameEditText;
-    private Button submit, showAllBtn;
+    private Button submit, showAllBtn,toMainReturn;
 
     private ProgressDialog progressDialog;
     //Variables for the images
@@ -67,6 +68,7 @@ public class StoreUserData extends AppCompatActivity {
         photoNameEditText = findViewById(R.id.photo_name);
         submit = findViewById(R.id.submit);
         showAllBtn = findViewById(R.id.show_Allphoto);
+        toMainReturn = findViewById(R.id.fromSUDtoMain);
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -79,6 +81,9 @@ public class StoreUserData extends AppCompatActivity {
 
         showAllBtn.setOnClickListener(v -> startActivity( new Intent(StoreUserData.this , ShowPhotoActivity.class)));
 
+        //-------------Return to MainActivity--------------------
+        toMainReturn.setOnClickListener(v -> startActivity( new Intent(StoreUserData.this , MainActivity.class)));
+
         //-------------Choose the image from the phone--------------
 
         userImage.setOnClickListener(view -> {
@@ -88,15 +93,12 @@ public class StoreUserData extends AppCompatActivity {
 
                     Toast.makeText(StoreUserData.this, "Nu există permisiune", Toast.LENGTH_LONG).show();
                     ActivityCompat.requestPermissions(StoreUserData.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
                 } else {
                     chooseImage();
                 }
-
             } else {
                 chooseImage();
             }
-
         });
 
         //------------------Store the data in Firebase------------

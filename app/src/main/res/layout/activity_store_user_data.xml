@@ -49,5 +49,11 @@
         android:text="Imagini incarcate"
         android:layout_margin="20dp"/>
 
+    <Button
+        android:id="@+id/fromSUDtoMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import java.util.Random;
 public class Test1 extends AppCompatActivity {
 
     public int score = 0;
-    private int questionNumber = 1;
+    private int questionNumber = 0;
     private final int[] no_questions_ToAsk ={-1,-1,-1,-1,-1};
     private String[] questionDataArray;
     private boolean isQuestionLeft;
@@ -39,7 +39,7 @@ public class Test1 extends AppCompatActivity {
 
         setQuestion();
         questionTextView.setText(questionDataArray[0]);
-        questionNumberTextView.setText(String.valueOf(questionNumber));
+        questionNumberTextView.setText(String.valueOf(questionNumber+1));
 
         //------------Click Listener for the TRUE button
         trueBtn.setOnClickListener(v -> {
@@ -54,7 +54,7 @@ public class Test1 extends AppCompatActivity {
                 if (isQuestionLeft) {
                     setQuestion();
                     questionTextView.setText(questionDataArray[0]);
-                    questionNumberTextView.setText(String.valueOf(questionNumber));
+                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
             } else Toast.makeText(Test1.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
         });
@@ -73,7 +73,7 @@ public class Test1 extends AppCompatActivity {
                 if (isQuestionLeft) {
                     setQuestion();
                     questionTextView.setText(questionDataArray[0]);
-                    questionNumberTextView.setText(String.valueOf(questionNumber));
+                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
             } else Toast.makeText(Test1.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
         });
@@ -91,7 +91,7 @@ public class Test1 extends AppCompatActivity {
 
     //--------------------------THE FUNCTION THAT GETS THE QUESTION--------------------------
     public void setQuestion(){
-        if(questionNumber<=6) {
+        if(questionNumber<=5) {
             isQuestionLeft = false;
 
             //Verifying if there is a question remained to ask
@@ -108,8 +108,8 @@ public class Test1 extends AppCompatActivity {
                     if (no_questions_ToAsk[i] == randomNo) setQuestion();
                 }
 
-                if (no_questions_ToAsk[questionNumber - 1] == -1 && questionNumber<= 6) {
-                    no_questions_ToAsk[questionNumber - 1] = randomNo;
+                if (no_questions_ToAsk[questionNumber ] == -1 && questionNumber< 5) {
+                    no_questions_ToAsk[questionNumber ] = randomNo;
                     switch (randomNo) {
                         case 0:
                             questionDataArray = getQuestionData("Se traverseaza pe culoarea verde a semaforului.", "true");
