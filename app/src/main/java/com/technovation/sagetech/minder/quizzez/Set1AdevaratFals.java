@@ -1,7 +1,4 @@
 package com.technovation.sagetech.minder.quizzez;
-import com.technovation.sagetech.minder.quizzez.Test1;
-
-import java.util.Random;
 
 /*public class Set1AdevaratFals  {
   public int score = 0;
@@ -10,7 +7,7 @@ import java.util.Random;
     boolean isQuestionLeft;
 // private int wrong_answers, correct_answers;
  public int[] no_questions_ToAsk ={-1,-1,-1,-1,-1};
- Test1 test1varr;
+ Test1_TrueFalse test1varr;
 
 
     //---------------------THE FUNCTION THAT GETS THE QUESTION--------------------------

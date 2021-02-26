@@ -2,9 +2,7 @@ package com.technovation.sagetech.minder.quizzez;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +12,7 @@ import com.technovation.sagetech.minder.R;
 import java.util.Random;
 
 //--------------THIS CLASS SHOULD START AFTER START BUTTON FROM MainActivity IS PRESSED------------------
-public class Test1 extends AppCompatActivity {
+public class Test1_TrueFalse extends AppCompatActivity {
 
     public int score = 0;
     private int questionNumber = 0;
@@ -46,9 +44,9 @@ public class Test1 extends AppCompatActivity {
             if (isQuestionLeft) {
                 if (questionDataArray[1].equals("true")) {
                     score += 10;
-                    Toast.makeText(Test1.this, "Corect!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Test1.this, "Gresit!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
                 }
                 questionNumber++;
                 if (isQuestionLeft) {
@@ -56,7 +54,7 @@ public class Test1 extends AppCompatActivity {
                     questionTextView.setText(questionDataArray[0]);
                     questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
-            } else Toast.makeText(Test1.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(Test1_TrueFalse.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -65,9 +63,9 @@ public class Test1 extends AppCompatActivity {
             if (isQuestionLeft) {
                 if (questionDataArray[1].equals("false") && isQuestionLeft) {
                     score += 10;
-                    Toast.makeText(Test1.this, "Corect!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Test1.this, "Gresit!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
                 }
                 questionNumber++;
                 if (isQuestionLeft) {
@@ -75,7 +73,7 @@ public class Test1 extends AppCompatActivity {
                     questionTextView.setText(questionDataArray[0]);
                     questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
-            } else Toast.makeText(Test1.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
+            } else Toast.makeText(Test1_TrueFalse.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -143,7 +141,7 @@ public class Test1 extends AppCompatActivity {
                     }
                 } else setQuestion();
             }
-        }else Toast.makeText(Test1.this,"Sa trecem la urmatoarele intrebari",Toast.LENGTH_SHORT).show();
+        }else Toast.makeText(Test1_TrueFalse.this,"Sa trecem la urmatoarele intrebari",Toast.LENGTH_SHORT).show();
     }
 
 

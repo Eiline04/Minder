@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.technovation.sagetech.minder.authentication.LoginActivity;
 import com.technovation.sagetech.minder.authentication.StoreUserData;
-import com.technovation.sagetech.minder.quizzez.Test1;
+import com.technovation.sagetech.minder.quizzez.Test1_TrueFalse;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-        //------------Start Test1 Activity---------------
+        //------------Start Test1_TrueFalse Activity---------------
         startBtn.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, Test1.class));
+            startActivity(new Intent(MainActivity.this, Test1_TrueFalse.class));
             finish();
         });
     }
