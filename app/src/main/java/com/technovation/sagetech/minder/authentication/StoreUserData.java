@@ -174,7 +174,6 @@ public class StoreUserData extends AppCompatActivity {
         //---!!!!!------------------Se face asocierea dintre nume si poza!
         Map<String, String> userData = new HashMap<>();
         userData.put(photoName, download_uri.toString());
-        Model model = new Model(download_uri.toString());
 
         //----!!Colectia------------------------
         firebaseFirestore.collection("Users").document(user_id).set(userData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {

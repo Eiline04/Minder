@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/m_image"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/photoName_TextView"
@@ -17,6 +18,8 @@
         android:layout_height="56dp"
 
         android:layout_gravity="bottom|center|center_horizontal|center_vertical"
+        android:background="#D14444"
         android:foregroundGravity="bottom|center_vertical|center|center_horizontal"
-        android:gravity="bottom|center|center_horizontal|center_vertical" />
+        android:gravity="bottom|center|center_horizontal|center_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </androidx.cardview.widget.CardView>

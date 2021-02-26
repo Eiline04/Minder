@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +37,10 @@ import java.util.ArrayList;
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Glide.with(context).load(mList.get(position).getImageUrl()).into(holder.imageView);
+        RecyclerModel cardModel = mList.get(position);
+        holder.textView.setText(cardModel.getImageName());
+        Glide.with(context).load(cardModel.getImageUrl()).into(holder.imageView);
+
 
     }
 
@@ -48,10 +52,12 @@ import java.util.ArrayList;
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView;
+        TextView textView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            textView = itemView.findViewById(R.id.photoName_TextView);
             imageView = itemView.findViewById(R.id.m_image);
         }
     }
