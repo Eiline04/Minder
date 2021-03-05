@@ -20,11 +20,10 @@ public class LogoScreen extends AppCompatActivity {
 
         if(current_user_id==null){
             startActivity(new Intent(LogoScreen.this, LoginActivity.class));
-            finish();
         }else{
             startActivity(new Intent(LogoScreen.this, MainActivity.class));
-            finish();
         }
+        finish();
 
     }
 

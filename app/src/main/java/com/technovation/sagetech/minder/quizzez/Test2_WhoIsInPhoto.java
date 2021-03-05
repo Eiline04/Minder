@@ -11,6 +11,6 @@ public class Test2_WhoIsInPhoto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test2__who_photo);
+        setContentView(R.layout.activity_test2_who_photo);
     }
 }

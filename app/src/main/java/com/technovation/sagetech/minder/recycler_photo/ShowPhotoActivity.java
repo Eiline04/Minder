@@ -26,6 +26,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView photoName;
     private ImageView imageView;
+    private String user_id;
     private ArrayList<RecyclerModel> mList;
 
     private RecyclerViewAdapter adapter;
@@ -33,7 +34,46 @@ public class ShowPhotoActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private ProgressDialog progressDialog;
+/*
+    //---04.03---------------------added
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseFirestore.collection("Users").document(user_id).get().
+                addOnCompleteListener(task -> {
 
+                    if(task.isSuccessful()){
+
+                        progressDialog.dismiss();
+                        if(task.getResult().exists()){
+
+
+                            HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
+                            //ArrayList<String > key = new ArrayList<>();
+                            //ArrayList<String> value = new ArrayList<>();
+                            //int index = 0;
+
+                            for(String stringKey : dbData.keySet()){
+                                // key.set(index, stringKey);
+                                //value.set(index, (String) dbData.get(stringKey));
+
+                                String modelUrl = (String) dbData.get(stringKey);
+                                mList.add(new RecyclerModel(stringKey, modelUrl));
+
+                                // mList.add(value.get(index));
+                                //index++;
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }else{
+                        Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+    }
+//-------------------------------------
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +89,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         firebaseAuth = FirebaseAuth.getInstance();
-        String user_id = firebaseAuth.getCurrentUser().getUid();
+        user_id = firebaseAuth.getCurrentUser().getUid();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         mList= new ArrayList<>();
@@ -62,39 +102,36 @@ public class ShowPhotoActivity extends AppCompatActivity {
         progressDialog.show();
 
         firebaseFirestore.collection("Users").document(user_id).get().
-                addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                addOnCompleteListener(task -> {
 
-                        if(task.isSuccessful()){
+                    if(task.isSuccessful()){
 
-                            progressDialog.dismiss();
-                            if(task.getResult().exists()){
+                        progressDialog.dismiss();
+                        if(task.getResult().exists()){
 
 
-                               HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
-                               //ArrayList<String > key = new ArrayList<>();
-                               //ArrayList<String> value = new ArrayList<>();
-                               //int index = 0;
+                           HashMap<String,Object> dbData = (HashMap<String, Object>) task.getResult().getData();
+                           //ArrayList<String > key = new ArrayList<>();
+                           //ArrayList<String> value = new ArrayList<>();
+                           //int index = 0;
 
-                               for(String stringKey : dbData.keySet()){
-                                  // key.set(index, stringKey);
-                                   //value.set(index, (String) dbData.get(stringKey));
+                           for(String stringKey : dbData.keySet()){
+                              // key.set(index, stringKey);
+                               //value.set(index, (String) dbData.get(stringKey));
 
-                                   String modelUrl = (String) dbData.get(stringKey);
-                                   mList.add(new RecyclerModel(stringKey, modelUrl));
+                               String modelUrl = (String) dbData.get(stringKey);
+                               mList.add(new RecyclerModel(stringKey, modelUrl));
 
-                                  // mList.add(value.get(index));
-                                   //index++;
-                               }
-                                adapter.notifyDataSetChanged();
-                            }
-
-                        }else{
-                            Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
+                              // mList.add(value.get(index));
+                               //index++;
+                           }
+                            adapter.notifyDataSetChanged();
                         }
 
+                    }else{
+                        Toast.makeText(ShowPhotoActivity.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
                     }
+
                 });
     }
 

@@ -21,7 +21,7 @@ import com.technovation.sagetech.minder.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText emailAdress, passwordEditText;
+    private EditText emailAddress, passwordEditText;
     private Button signInBtn, signUpBtn;
     private FirebaseAuth mAuth;
 
@@ -32,41 +32,33 @@ public class LoginActivity extends AppCompatActivity {
         //
         getWindow() .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        emailAdress = findViewById(R.id.emailFiled);
+        emailAddress = findViewById(R.id.emailFiled);
         passwordEditText = findViewById(R.id.passwordFiled);
         signInBtn = findViewById(R.id.signinButton);
         signUpBtn = findViewById(R.id.signupButton);
 
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
-            }
-        });
+        signUpBtn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this,SignUpActivity.class)));
 
         mAuth = FirebaseAuth.getInstance();
 
-        signInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailAdress.getText().toString();
-                String password = passwordEditText.getText().toString(); //Pass from tutorial
+        signInBtn.setOnClickListener(v -> {
+            String email = emailAddress.getText().toString();
+            String password = passwordEditText.getText().toString(); //Pass from tutorial
 
-                if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(password)){
-                    mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
-                            }else{
-                                Toast.makeText(LoginActivity.this,"Eroare: "+ task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                            }
+            if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(password)){
+                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }else{
+                            Toast.makeText(LoginActivity.this,"Eroare: "+ task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }else{
-                    Toast.makeText(LoginActivity.this,"Există câmpuri necompletate!",Toast.LENGTH_SHORT).show();
-                }
+                    }
+                });
+            }else{
+                Toast.makeText(LoginActivity.this,"Există câmpuri necompletate!",Toast.LENGTH_SHORT).show();
             }
         });
 
