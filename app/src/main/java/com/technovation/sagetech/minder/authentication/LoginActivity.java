@@ -22,7 +22,7 @@ import com.technovation.sagetech.minder.R;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailAddress, passwordEditText;
-    private Button signInBtn, signUpBtn;
+    private Button signInBtn, signUpBtn, newBtn;
     private FirebaseAuth mAuth;
 
     @Override
