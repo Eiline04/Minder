@@ -1,6 +1,8 @@
 package com.technovation.sagetech.minder.quizzez;
 
-/*public class Set1AdevaratFals  {
+import java.util.Random;
+/*
+public class Set1AdevaratFals  {
   public int score = 0;
     public int questionNumber = 1;
     protected String[] questionDataArray;
@@ -61,5 +63,5 @@ package com.technovation.sagetech.minder.quizzez;
         } else if(isQuestionLeft) setQuestion();
     }
 
-}
-*/
+}*/
+
