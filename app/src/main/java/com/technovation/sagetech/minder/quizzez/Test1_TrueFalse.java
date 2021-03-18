@@ -3,134 +3,156 @@ package com.technovation.sagetech.minder.quizzez;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
-
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
+import com.technovation.sagetech.minder.authentication.StoreUserData;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Random;
 
+//--------------THIS CLASS SHOULD START AFTER START BUTTON FROM MainActivity IS PRESSED------------------
 public class Test1_TrueFalse extends AppCompatActivity {
 
-    private static final Integer NUMBER_OF_QUESTIONS = 5;
+    public int score = 0;
+    private int questionNumber = 0;
+    private final int[] no_questions_ToAsk ={-1,-1,-1,-1,-1};
+    private String[] questionDataArray;
+    private boolean isQuestionLeft;
+    private TextView questionTextView, questionNumberTextView;
+    private Button trueBtn, falseBtn;
 
-    private FirebaseFirestore firebaseFirestore;
-
-    List<Question> questions;
-    private int globalQuestionIndex;
-
-    private TextView questionTextView;
-    private TextView questionNumberTextView;
-    private TextView resultText;
-    private Button trueBtn;
-    private Button falseBtn;
-    private Button dontKnowButton;
-    private View loadingWidget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
         setContentView(R.layout.adevarat_sau_fals);
 
         questionTextView = findViewById(R.id.intrebareTextView_AsauF);
         questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);
         trueBtn = findViewById(R.id.trueBtn);
         falseBtn = findViewById(R.id.falseBtn);
-        dontKnowButton = findViewById(R.id.nuStiuBtnAsauF);
-        resultText = findViewById(R.id.resultText);
-        loadingWidget = findViewById(R.id.loadingProgress);
 
-        //--------------------Get the Question data from Firestore Database------------------------
-        setVisibilityForAll(View.INVISIBLE);
+        questionDataArray = new String[2];
 
-        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
+        setQuestion();
+        questionTextView.setText(questionDataArray[0]);
+        questionNumberTextView.setText(String.valueOf(questionNumber+1));
 
         //------------Click Listener for the TRUE button
-        trueBtn.setOnClickListener(this::buttonListener);
-        falseBtn.setOnClickListener(this::buttonListener);
+        trueBtn.setOnClickListener(v -> {
+            if (isQuestionLeft) {
+                if (questionDataArray[1].equals("true")) {
+                    score += 10;
+                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+                }
+                questionNumber++;
+                if (isQuestionLeft) {
+                    setQuestion();
+                    questionTextView.setText(questionDataArray[0]);
+                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
+                }
+            } else{
+                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+            }
+        });
+
+
+        //------------Click Listener for the FALSE button
+        falseBtn.setOnClickListener(v -> {
+            if (isQuestionLeft) {
+                if (questionDataArray[1].equals("false") && isQuestionLeft) {
+                    score += 10;
+                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+                }
+                questionNumber++;
+                if (isQuestionLeft) {
+                    setQuestion();
+                    questionTextView.setText(questionDataArray[0]);
+                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
+                }
+            } else{
+                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+            }
+        });
+
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        globalQuestionIndex = 0;
-        resultText.setVisibility(View.INVISIBLE);
+    //--------------------CREATING A ARRAY WITH THE QUESTION AND ITS ANSWER-----------------
+    String[] getQuestionData(String question, String answer){
+        String[] questionAndAnswer = new String[2];
+        questionAndAnswer[0] = question;
+        questionAndAnswer[1] = answer;
+        return questionAndAnswer;
     }
 
-    /**
-     * Sets the visibility for all widgets
-     * Loading widget has the visibility flipped
-     *
-     * @param visibility View.VISIBLE or View.INVISIBLE
-     */
-    private void setVisibilityForAll(int visibility) {
-        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-        questionTextView.setVisibility(visibility);
-        questionNumberTextView.setVisibility(visibility);
-        trueBtn.setVisibility(visibility);
-        falseBtn.setVisibility(visibility);
-        dontKnowButton.setVisibility(visibility);
+    //--------------------------THE FUNCTION THAT GETS THE QUESTION--------------------------
+    public void setQuestion(){
+        if(questionNumber<=5) {
+            isQuestionLeft = false;
+
+            //Verifying if there is a question remained to ask
+            for (int i = 0; i < 5 && !isQuestionLeft; i++) {
+                if (no_questions_ToAsk[i] == -1) isQuestionLeft = true;
+            }
+
+
+            if (isQuestionLeft) {
+                Random rand = new Random();
+                int randomNo = rand.nextInt(9);
+
+                for (int i = 0; i < 5; i++) {
+                    if (no_questions_ToAsk[i] == randomNo) setQuestion();
+                }
+
+                if (no_questions_ToAsk[questionNumber ] == -1 && questionNumber< 5) {
+                    no_questions_ToAsk[questionNumber ] = randomNo;
+                    switch (randomNo) {
+                        case 0:
+                            questionDataArray = getQuestionData("Se traverseaza pe culoarea verde a semaforului.", "true");
+                            break;
+                        case 1:
+                            questionDataArray = getQuestionData("Marul este o leguma.", "false");
+                            break;
+                        case 2:
+                            questionDataArray = getQuestionData("Daca ploua, este bine sa folosim umbrela.", "true");
+                            break;
+                        case 3:
+                            questionDataArray = getQuestionData("Catelul are patru picioare.", "true");
+                            break;
+                        case 4:
+                            questionDataArray = getQuestionData("Soarele este vizibil noaptea.", "false");
+                            break;
+                        case 5:
+                            questionDataArray = getQuestionData("Apa are gust.", "false");
+                            break;
+                        case 6:
+                            questionDataArray = getQuestionData("Apa de mare este sarata.", "true");
+                            break;
+                        case 7:
+                            questionDataArray = getQuestionData("Lamaia este acra.", "true");
+                            break;
+                        case 8:
+                            questionDataArray = getQuestionData("Ciresii infloresc vara.", "false");
+                            break;
+                        default:
+                            questionDataArray = getQuestionData("Pinguinii zboara.", "false");
+                    }
+                } else setQuestion();
+            }
+        }else Toast.makeText(Test1_TrueFalse.this,"Sa trecem la urmatoarele intrebari",Toast.LENGTH_SHORT).show();
     }
 
-    private void onLoadData(Task<DocumentSnapshot> task) {
-        setVisibilityForAll(View.VISIBLE);
-        if (task.isSuccessful()) {
-
-            Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
-
-            questions = task.getResult().getData().entrySet().stream()
-                    .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))
-                    .collect(Collectors.toList());
-
-//            questions = new ArrayList<>();
-//            for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
-//                questions.add(new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")));
-//            }
 
 
-            Collections.shuffle(questions);
-
-            setQuestion();
-        }
-    }
-
-    private void buttonListener(View view) {
-
-        Boolean answer = view.getId() == R.id.trueBtn;
-        Boolean isCorrect = questions.get(globalQuestionIndex).isCorrect(answer);
-
-        resultText.setVisibility(View.VISIBLE);
-        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
-        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
-
-        globalQuestionIndex += 1;
-        if (globalQuestionIndex >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
-            Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
-        } else {
-            view.postDelayed(this::setQuestion, 1000);
-        }
-    }
-
-    private void setQuestion() {
-        questionTextView.setText(String.valueOf(questions.get(globalQuestionIndex).getQuestion()));
-        questionNumberTextView.setText(String.valueOf(globalQuestionIndex + 1));
-        resultText.setVisibility(View.INVISIBLE);
-    }
 }
