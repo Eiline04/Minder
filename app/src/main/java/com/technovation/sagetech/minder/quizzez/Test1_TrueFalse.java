@@ -2,12 +2,15 @@ package com.technovation.sagetech.minder.quizzez;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
+import com.technovation.sagetech.minder.authentication.StoreUserData;
 
 import java.util.Random;
 
@@ -54,7 +57,10 @@ public class Test1_TrueFalse extends AppCompatActivity {
                     questionTextView.setText(questionDataArray[0]);
                     questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
-            } else Toast.makeText(Test1_TrueFalse.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+            }
         });
 
 
@@ -73,7 +79,10 @@ public class Test1_TrueFalse extends AppCompatActivity {
                     questionTextView.setText(questionDataArray[0]);
                     questionNumberTextView.setText(String.valueOf(questionNumber+1));
                 }
-            } else Toast.makeText(Test1_TrueFalse.this, "Testul s-a terminat!", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+            }
         });
 
 

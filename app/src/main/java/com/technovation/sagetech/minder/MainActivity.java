@@ -13,8 +13,7 @@ import com.technovation.sagetech.minder.quizzez.Test1_TrueFalse;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private Button signOut, toSUDActivity, startBtn;
+    private Button startBtn, settings;
 
 
     @Override
@@ -22,27 +21,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-        signOut = findViewById(R.id.signOutButton);
-        toSUDActivity = findViewById(R.id.toStoreUDBtn);
         startBtn = findViewById(R.id.startBtn);
-
-        //------------------SignOut the user------------------
-        signOut.setOnClickListener(v -> {
-            mAuth.signOut();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        });
-
-        //------------Open StoreUserData Activity---------------
-        toSUDActivity.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, StoreUserData.class));
-            finish();
-        });
+        settings = findViewById(R.id.settings);
 
         //------------Start Test1_TrueFalse Activity---------------
         startBtn.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, Test1_TrueFalse.class));
+            finish();
+        });
+
+        //------------Start SettingsActivity---------------
+        settings.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             finish();
         });
     }

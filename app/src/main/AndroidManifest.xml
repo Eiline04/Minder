@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".quizzez.Test2_WhoIsInPhoto"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".quizzez.Test2_WhoIsInPhoto" />
         <activity android:name=".quizzez.Test1_TrueFalse" />
         <activity android:name=".recycler_photo.ShowPhotoActivity" />
         <activity android:name=".authentication.StoreUserData" />
