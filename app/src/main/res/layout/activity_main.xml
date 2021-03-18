@@ -7,35 +7,6 @@
     tools:context=".MainActivity"
     android:background="@drawable/bg_gradient">
 
-    <Button
-        android:id="@+id/signOutButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Deconectare"
-        android:textSize="20sp"
-        android:fontFamily="@font/poppins_extrabold"
-        android:background="@drawable/rectangle_purple_stroke"
-        android:textColor="#F53E0202"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
-
-    <Button
-        android:id="@+id/toStoreUDBtn"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="  Adaugă imagini  "
-        android:textSize="20sp"
-        android:fontFamily="@font/poppins_extrabold"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067"
-        android:background="@drawable/rectangle_purple_round"/>
 
     <Button
         android:id="@+id/tutorials"
@@ -67,4 +38,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.54" />
+
+    <Button
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="setari"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865" />
 </androidx.constraintlayout.widget.ConstraintLayout>
