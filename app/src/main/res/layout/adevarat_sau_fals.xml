@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient">
 
+
+
     <TextView
         android:id="@+id/numarIntrebare_AsauF"
         android:layout_width="wrap_content"
@@ -26,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -38,10 +41,13 @@
 
     <Button
         android:id="@+id/trueBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_purple_stroke"
+        android:background="@drawable/adevarat"
         android:text="Adevarat"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textColor="#117106"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -51,10 +57,13 @@
 
     <Button
         android:id="@+id/falseBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="#D62525"
+        android:background="@drawable/fals"
         android:text="Fals"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textColor="#780404"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -64,10 +73,13 @@
 
     <Button
         android:id="@+id/nuStiuBtnAsauF"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
+        android:background="@drawable/nu_stiu"
         android:text="Nu stiu"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textColor="#2D0970"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
