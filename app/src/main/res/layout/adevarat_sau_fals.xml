@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
 
     <TextView
         android:id="@+id/numarIntrebare_AsauF"
@@ -15,7 +16,10 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.15"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textSize="20sp"
+        android:textColor="#FF533A7B"/>
 
     <TextView
         android:id="@+id/intrebareTextView_AsauF"
@@ -27,13 +31,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255" />
+        app:layout_constraintVertical_bias="0.255"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textSize="30sp"
+        android:textColor="#FF533A7B"/>
 
     <Button
         android:id="@+id/trueBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#4CAF50"
+        android:background="@drawable/rectangle_purple_stroke"
         android:text="Adevarat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
