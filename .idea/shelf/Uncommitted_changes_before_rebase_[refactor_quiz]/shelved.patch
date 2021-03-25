@@ -1,0 +1,453 @@
+Index: app/src/main/java/com/technovation/sagetech/minder/quizzez/Test1_TrueFalse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.technovation.sagetech.minder.quizzez;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.text.method.QwertyKeyListener;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.firestore.FirebaseFirestore;\r\nimport com.technovation.sagetech.minder.MainActivity;\r\nimport com.technovation.sagetech.minder.R;\r\nimport com.technovation.sagetech.minder.authentication.StoreUserData;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.Random;\r\n\r\n\r\npublic class Test1_TrueFalse extends AppCompatActivity {\r\n\r\n    private FirebaseFirestore firebaseFirestore;\r\n    private HashMap<String,Object> questionDataFromDB;\r\n    private ArrayList<String> questionKey;\r\n    private int qKeyLength;\r\n\r\n    public int globalQuestionIndex, randomNo;\r\n\r\n    private TextView questionTextView, questionNumberTextView;\r\n    private Button trueBtn, falseBtn;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.adevarat_sau_fals);\r\n\r\n       // init();\r\n        randomNo = 0;\r\n        globalQuestionIndex = 0;\r\n        qKeyLength = 0;\r\n        questionDataFromDB = new HashMap<>();\r\n        questionKey = new ArrayList<>();\r\n        firebaseFirestore = FirebaseFirestore.getInstance();\r\n\r\n        questionTextView = findViewById(R.id.intrebareTextView_AsauF);\r\n        questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);\r\n        trueBtn = findViewById(R.id.trueBtn);\r\n        falseBtn = findViewById(R.id.falseBtn);\r\n\r\n        //--------------------Get the Question data from Firestore Database------------------------\r\n        firebaseFirestore.collection(\"Tests\").document(\"TrueFalse\").get().\r\n                addOnCompleteListener(task -> {\r\n\r\n                    if(task.isSuccessful()){\r\n\r\n                        questionDataFromDB =(HashMap<String, Object>) task.getResult().getData();\r\n\r\n                        Toast.makeText(Test1_TrueFalse.this,\"Datele au fost obtinute.\",Toast.LENGTH_SHORT).show();\r\n\r\n                        questionKey.addAll(questionDataFromDB.keySet());\r\n                        qKeyLength = questionKey.size();\r\n\r\n                    }\r\n                });\r\n\r\n\r\n        setQuestion();\r\n\r\n        //------------Click Listener for the TRUE button\r\n        trueBtn.setOnClickListener(v -> {\r\n            if (globalQuestionIndex<5) {\r\n                if (questionDataFromDB.get(questionKey.get(randomNo)).toString().equals(\"true\")) {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Corect!\", Toast.LENGTH_SHORT).show();\r\n                } else {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Gresit!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                setQuestion();\r\n            } else{\r\n                Toast.makeText(Test1_TrueFalse.this, \"Să trecem la urmatoarele întrebări!\", Toast.LENGTH_SHORT).show();\r\n                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));\r\n            }\r\n        });\r\n\r\n        falseBtn.setOnClickListener(v -> {\r\n            if (globalQuestionIndex<5) {\r\n                if (questionDataFromDB.get(questionKey.get(randomNo)).toString().equals(\"false\")) {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Corect!\", Toast.LENGTH_SHORT).show();\r\n                } else {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Gresit!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                setQuestion();\r\n            } else{\r\n                Toast.makeText(Test1_TrueFalse.this, \"Să trecem la urmatoarele întrebări!\", Toast.LENGTH_SHORT).show();\r\n                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    private void init(){\r\n\r\n        randomNo = 0;\r\n        globalQuestionIndex = 0;\r\n        qKeyLength = 0;\r\n        questionDataFromDB = new HashMap<>();\r\n        questionKey = new ArrayList<>();\r\n        firebaseFirestore = FirebaseFirestore.getInstance();\r\n\r\n        questionTextView = findViewById(R.id.intrebareTextView_AsauF);\r\n        questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);\r\n        trueBtn = findViewById(R.id.trueBtn);\r\n        falseBtn = findViewById(R.id.falseBtn);\r\n    }\r\n\r\n    private void setQuestion(){\r\n        Random rand = new Random();\r\n        randomNo = rand.nextInt(qKeyLength-1);\r\n        questionTextView.setText(String.valueOf(questionKey.get(randomNo)));\r\n        questionNumberTextView.setText(String.valueOf(++globalQuestionIndex));\r\n\r\n        questionKey.remove(randomNo);\r\n        qKeyLength--;\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n/** I will comment this working code to try out something new - to read the questions from DB-**/\r\n/*\r\n//--------------THIS CLASS SHOULD START AFTER START BUTTON FROM MainActivity IS PRESSED------------------\r\npublic class Test1_TrueFalse extends AppCompatActivity {\r\n\r\n    public int score = 0;\r\n    private int questionNumber = 0;\r\n    private final int[] no_questions_ToAsk ={-1,-1,-1,-1,-1};\r\n    private String[] questionDataArray;\r\n    private boolean isQuestionLeft;\r\n    private TextView questionTextView, questionNumberTextView;\r\n    private Button trueBtn, falseBtn;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.adevarat_sau_fals);\r\n\r\n        questionTextView = findViewById(R.id.intrebareTextView_AsauF);\r\n        questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);\r\n        trueBtn = findViewById(R.id.trueBtn);\r\n        falseBtn = findViewById(R.id.falseBtn);\r\n\r\n        questionDataArray = new String[2];\r\n\r\n        setQuestion();\r\n        questionTextView.setText(questionDataArray[0]);\r\n        questionNumberTextView.setText(String.valueOf(questionNumber+1));\r\n\r\n        //------------Click Listener for the TRUE button\r\n        trueBtn.setOnClickListener(v -> {\r\n            if (isQuestionLeft) {\r\n                if (questionDataArray[1].equals(\"true\")) {\r\n                    score += 10;\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Corect!\", Toast.LENGTH_SHORT).show();\r\n                } else {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Gresit!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                questionNumber++;\r\n                if (isQuestionLeft) {\r\n                    setQuestion();\r\n                    questionTextView.setText(questionDataArray[0]);\r\n                    questionNumberTextView.setText(String.valueOf(questionNumber+1));\r\n                }\r\n            } else{\r\n                Toast.makeText(Test1_TrueFalse.this, \"Să trecem la urmatoarele întrebări!\", Toast.LENGTH_SHORT).show();\r\n                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));\r\n            }\r\n        });\r\n\r\n\r\n        //------------Click Listener for the FALSE button\r\n        falseBtn.setOnClickListener(v -> {\r\n            if (isQuestionLeft) {\r\n                if (questionDataArray[1].equals(\"false\") && isQuestionLeft) {\r\n                    score += 10;\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Corect!\", Toast.LENGTH_SHORT).show();\r\n                } else {\r\n                    Toast.makeText(Test1_TrueFalse.this, \"Gresit!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                questionNumber++;\r\n                if (isQuestionLeft) {\r\n                    setQuestion();\r\n                    questionTextView.setText(questionDataArray[0]);\r\n                    questionNumberTextView.setText(String.valueOf(questionNumber+1));\r\n                }\r\n            } else{\r\n                Toast.makeText(Test1_TrueFalse.this, \"Să trecem la urmatoarele întrebări!\", Toast.LENGTH_SHORT).show();\r\n                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));\r\n            }\r\n        });\r\n\r\n\r\n    }\r\n\r\n    //--------------------CREATING A ARRAY WITH THE QUESTION AND ITS ANSWER-----------------\r\n    String[] getQuestionData(String question, String answer){\r\n        String[] questionAndAnswer = new String[2];\r\n        questionAndAnswer[0] = question;\r\n        questionAndAnswer[1] = answer;\r\n        return questionAndAnswer;\r\n    }\r\n\r\n    //--------------------------THE FUNCTION THAT GETS THE QUESTION--------------------------\r\n    public void setQuestion(){\r\n        if(questionNumber<=5) {\r\n            isQuestionLeft = false;\r\n\r\n            //Verifying if there is a question remained to ask\r\n            for (int i = 0; i < 5 && !isQuestionLeft; i++) {\r\n                if (no_questions_ToAsk[i] == -1) isQuestionLeft = true;\r\n            }\r\n\r\n\r\n            if (isQuestionLeft) {\r\n                Random rand = new Random();\r\n                int randomNo = rand.nextInt(9);\r\n\r\n                for (int i = 0; i < 5; i++) {\r\n                    if (no_questions_ToAsk[i] == randomNo) setQuestion();\r\n                }\r\n\r\n                if (no_questions_ToAsk[questionNumber ] == -1 && questionNumber< 5) {\r\n                    no_questions_ToAsk[questionNumber ] = randomNo;\r\n                    switch (randomNo) {\r\n                        case 0:\r\n                            questionDataArray = getQuestionData(\"Se traverseaza pe culoarea verde a semaforului.\", \"true\");\r\n                            break;\r\n                        case 1:\r\n                            questionDataArray = getQuestionData(\"Mărul este o legumă.\", \"false\");\r\n                            break;\r\n                        case 2:\r\n                            questionDataArray = getQuestionData(\"Dacă plouă, este bine să folosim umbrela.\", \"true\");\r\n                            break;\r\n                        case 3:\r\n                            questionDataArray = getQuestionData(\"Cățelul are patru picioare.\", \"true\");\r\n                            break;\r\n                        case 4:\r\n                            questionDataArray = getQuestionData(\"Soarele este vizibil noaptea.\", \"false\");\r\n                            break;\r\n                        case 5:\r\n                            questionDataArray = getQuestionData(\"Apa are gust.\", \"false\");\r\n                            break;\r\n                        case 6:\r\n                            questionDataArray = getQuestionData(\"Apa de mare este sărată.\", \"true\");\r\n                            break;\r\n                        case 7:\r\n                            questionDataArray = getQuestionData(\"Lămâia este acră.\", \"true\");\r\n                            break;\r\n                        case 8:\r\n                            questionDataArray = getQuestionData(\"Cireșii înfloresc vara.\", \"false\");\r\n                            break;\r\n                        default:\r\n                            questionDataArray = getQuestionData(\"Pinguinii zboară.\", \"false\");\r\n                    }\r\n                } else setQuestion();\r\n            }\r\n        }else Toast.makeText(Test1_TrueFalse.this,\"Sa trecem la urmatoarele intrebari\",Toast.LENGTH_SHORT).show();\r\n    }\r\n}*/\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/technovation/sagetech/minder/quizzez/Test1_TrueFalse.java	(revision 1099e69a2acd3040d301df4f783e37b4153ed40c)
++++ app/src/main/java/com/technovation/sagetech/minder/quizzez/Test1_TrueFalse.java	(date 1616698691627)
+@@ -3,274 +3,134 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+ import android.content.Intent;
++import android.graphics.Color;
+ import android.os.Bundle;
+-import android.text.method.QwertyKeyListener;
++import android.view.View;
+ import android.widget.Button;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
+-import com.google.firebase.auth.FirebaseAuth;
++import com.google.android.gms.tasks.Task;
++
++import com.google.firebase.firestore.DocumentSnapshot;
+ import com.google.firebase.firestore.FirebaseFirestore;
+-import com.technovation.sagetech.minder.MainActivity;
++
+ import com.technovation.sagetech.minder.R;
+-import com.technovation.sagetech.minder.authentication.StoreUserData;
+ 
+ import java.util.ArrayList;
+-import java.util.HashMap;
+-import java.util.Random;
+-
++import java.util.Collections;
++import java.util.List;
++import java.util.Map;
++import java.util.stream.Collectors;
+ 
+ public class Test1_TrueFalse extends AppCompatActivity {
+ 
++    private static final Integer NUMBER_OF_QUESTIONS = 5;
++
+     private FirebaseFirestore firebaseFirestore;
+-    private HashMap<String,Object> questionDataFromDB;
+-    private ArrayList<String> questionKey;
+-    private int qKeyLength;
+ 
+-    public int globalQuestionIndex, randomNo;
++    List<Question> questions;
++    private int globalQuestionIndex;
+ 
+-    private TextView questionTextView, questionNumberTextView;
+-    private Button trueBtn, falseBtn;
++    private TextView questionTextView;
++    private TextView questionNumberTextView;
++    private TextView resultText;
++    private Button trueBtn;
++    private Button falseBtn;
++    private Button dontKnowButton;
++    private View loadingWidget;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++
++        firebaseFirestore = FirebaseFirestore.getInstance();
+         setContentView(R.layout.adevarat_sau_fals);
+ 
+-       // init();
+-        randomNo = 0;
+-        globalQuestionIndex = 0;
+-        qKeyLength = 0;
+-        questionDataFromDB = new HashMap<>();
+-        questionKey = new ArrayList<>();
+-        firebaseFirestore = FirebaseFirestore.getInstance();
+-
+         questionTextView = findViewById(R.id.intrebareTextView_AsauF);
+         questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);
+         trueBtn = findViewById(R.id.trueBtn);
+         falseBtn = findViewById(R.id.falseBtn);
++        dontKnowButton = findViewById(R.id.nuStiuBtnAsauF);
++        resultText = findViewById(R.id.resultText);
++        loadingWidget = findViewById(R.id.loadingProgress);
+ 
+         //--------------------Get the Question data from Firestore Database------------------------
+-        firebaseFirestore.collection("Tests").document("TrueFalse").get().
+-                addOnCompleteListener(task -> {
++        setVisibilityForAll(View.INVISIBLE);
++
++        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
+ 
+-                    if(task.isSuccessful()){
++        //------------Click Listener for the TRUE button
++        trueBtn.setOnClickListener(this::buttonListener);
++        falseBtn.setOnClickListener(this::buttonListener);
++
++    }
++
++    @Override
++    protected void onStart() {
++        super.onStart();
++        globalQuestionIndex = 0;
++        resultText.setVisibility(View.INVISIBLE);
++    }
++
++    /**
++     * Sets the visibility for all widgets
++     * Loading widget has the visibility flipped
++     *
++     * @param visibility View.VISIBLE or View.INVISIBLE
++     */
++    private void setVisibilityForAll(int visibility) {
++        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
++        questionTextView.setVisibility(visibility);
++        questionNumberTextView.setVisibility(visibility);
++        trueBtn.setVisibility(visibility);
++        falseBtn.setVisibility(visibility);
++        dontKnowButton.setVisibility(visibility);
++    }
++
++    private void onLoadData(Task<DocumentSnapshot> task) {
++        setVisibilityForAll(View.VISIBLE);
++        if (task.isSuccessful()) {
+ 
+-                        questionDataFromDB =(HashMap<String, Object>) task.getResult().getData();
++            Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
+ 
+-                        Toast.makeText(Test1_TrueFalse.this,"Datele au fost obtinute.",Toast.LENGTH_SHORT).show();
++            questions = task.getResult().getData().entrySet().stream()
++                    .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))
++                    .collect(Collectors.toList());
+ 
+-                        questionKey.addAll(questionDataFromDB.keySet());
+-                        qKeyLength = questionKey.size();
++//            questions = new ArrayList<>();
++//            for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
++//                questions.add(new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")));
++//            }
+ 
+-                    }
+-                });
+ 
++            Collections.shuffle(questions);
+ 
+-        setQuestion();
++            setQuestion();
++        }
++    }
+ 
+-        //------------Click Listener for the TRUE button
+-        trueBtn.setOnClickListener(v -> {
+-            if (globalQuestionIndex<5) {
+-                if (questionDataFromDB.get(questionKey.get(randomNo)).toString().equals("true")) {
+-                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+-                } else {
+-                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+-                }
+-                setQuestion();
+-            } else{
+-                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+-                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+-            }
+-        });
+-
+-        falseBtn.setOnClickListener(v -> {
+-            if (globalQuestionIndex<5) {
+-                if (questionDataFromDB.get(questionKey.get(randomNo)).toString().equals("false")) {
+-                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+-                } else {
+-                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+-                }
+-                setQuestion();
+-            } else{
+-                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+-                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+-            }
+-        });
+-
++    private void buttonListener(View view) {
++
++        Boolean answer = view.getId() == R.id.trueBtn;
++        Boolean isCorrect = questions.get(globalQuestionIndex).isCorrect(answer);
++
++        resultText.setVisibility(View.VISIBLE);
++        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
++        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
++
++        globalQuestionIndex += 1;
++        if (globalQuestionIndex >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
++            Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
++            startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
++        } else {
++            view.postDelayed(this::setQuestion, 1000);
++        }
+     }
+-
+-    private void init(){
+-
+-        randomNo = 0;
+-        globalQuestionIndex = 0;
+-        qKeyLength = 0;
+-        questionDataFromDB = new HashMap<>();
+-        questionKey = new ArrayList<>();
+-        firebaseFirestore = FirebaseFirestore.getInstance();
+-
+-        questionTextView = findViewById(R.id.intrebareTextView_AsauF);
+-        questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);
+-        trueBtn = findViewById(R.id.trueBtn);
+-        falseBtn = findViewById(R.id.falseBtn);
+-    }
+ 
+-    private void setQuestion(){
+-        Random rand = new Random();
+-        randomNo = rand.nextInt(qKeyLength-1);
+-        questionTextView.setText(String.valueOf(questionKey.get(randomNo)));
+-        questionNumberTextView.setText(String.valueOf(++globalQuestionIndex));
+-
+-        questionKey.remove(randomNo);
+-        qKeyLength--;
++    private void setQuestion() {
++        questionTextView.setText(String.valueOf(questions.get(globalQuestionIndex).getQuestion()));
++        questionNumberTextView.setText(String.valueOf(globalQuestionIndex + 1));
++        resultText.setVisibility(View.INVISIBLE);
+     }
+-}
+-
+-
+-
+-
+-
+-
+-
+-/** I will comment this working code to try out something new - to read the questions from DB-**/
+-/*
+-//--------------THIS CLASS SHOULD START AFTER START BUTTON FROM MainActivity IS PRESSED------------------
+-public class Test1_TrueFalse extends AppCompatActivity {
+-
+-    public int score = 0;
+-    private int questionNumber = 0;
+-    private final int[] no_questions_ToAsk ={-1,-1,-1,-1,-1};
+-    private String[] questionDataArray;
+-    private boolean isQuestionLeft;
+-    private TextView questionTextView, questionNumberTextView;
+-    private Button trueBtn, falseBtn;
+-
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.adevarat_sau_fals);
+-
+-        questionTextView = findViewById(R.id.intrebareTextView_AsauF);
+-        questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);
+-        trueBtn = findViewById(R.id.trueBtn);
+-        falseBtn = findViewById(R.id.falseBtn);
+-
+-        questionDataArray = new String[2];
+-
+-        setQuestion();
+-        questionTextView.setText(questionDataArray[0]);
+-        questionNumberTextView.setText(String.valueOf(questionNumber+1));
+-
+-        //------------Click Listener for the TRUE button
+-        trueBtn.setOnClickListener(v -> {
+-            if (isQuestionLeft) {
+-                if (questionDataArray[1].equals("true")) {
+-                    score += 10;
+-                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+-                } else {
+-                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+-                }
+-                questionNumber++;
+-                if (isQuestionLeft) {
+-                    setQuestion();
+-                    questionTextView.setText(questionDataArray[0]);
+-                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
+-                }
+-            } else{
+-                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+-                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+-            }
+-        });
+-
+-
+-        //------------Click Listener for the FALSE button
+-        falseBtn.setOnClickListener(v -> {
+-            if (isQuestionLeft) {
+-                if (questionDataArray[1].equals("false") && isQuestionLeft) {
+-                    score += 10;
+-                    Toast.makeText(Test1_TrueFalse.this, "Corect!", Toast.LENGTH_SHORT).show();
+-                } else {
+-                    Toast.makeText(Test1_TrueFalse.this, "Gresit!", Toast.LENGTH_SHORT).show();
+-                }
+-                questionNumber++;
+-                if (isQuestionLeft) {
+-                    setQuestion();
+-                    questionTextView.setText(questionDataArray[0]);
+-                    questionNumberTextView.setText(String.valueOf(questionNumber+1));
+-                }
+-            } else{
+-                Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+-                startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+-            }
+-        });
+-
+-
+-    }
+-
+-    //--------------------CREATING A ARRAY WITH THE QUESTION AND ITS ANSWER-----------------
+-    String[] getQuestionData(String question, String answer){
+-        String[] questionAndAnswer = new String[2];
+-        questionAndAnswer[0] = question;
+-        questionAndAnswer[1] = answer;
+-        return questionAndAnswer;
+-    }
+-
+-    //--------------------------THE FUNCTION THAT GETS THE QUESTION--------------------------
+-    public void setQuestion(){
+-        if(questionNumber<=5) {
+-            isQuestionLeft = false;
+-
+-            //Verifying if there is a question remained to ask
+-            for (int i = 0; i < 5 && !isQuestionLeft; i++) {
+-                if (no_questions_ToAsk[i] == -1) isQuestionLeft = true;
+-            }
+-
+-
+-            if (isQuestionLeft) {
+-                Random rand = new Random();
+-                int randomNo = rand.nextInt(9);
+-
+-                for (int i = 0; i < 5; i++) {
+-                    if (no_questions_ToAsk[i] == randomNo) setQuestion();
+-                }
+-
+-                if (no_questions_ToAsk[questionNumber ] == -1 && questionNumber< 5) {
+-                    no_questions_ToAsk[questionNumber ] = randomNo;
+-                    switch (randomNo) {
+-                        case 0:
+-                            questionDataArray = getQuestionData("Se traverseaza pe culoarea verde a semaforului.", "true");
+-                            break;
+-                        case 1:
+-                            questionDataArray = getQuestionData("Mărul este o legumă.", "false");
+-                            break;
+-                        case 2:
+-                            questionDataArray = getQuestionData("Dacă plouă, este bine să folosim umbrela.", "true");
+-                            break;
+-                        case 3:
+-                            questionDataArray = getQuestionData("Cățelul are patru picioare.", "true");
+-                            break;
+-                        case 4:
+-                            questionDataArray = getQuestionData("Soarele este vizibil noaptea.", "false");
+-                            break;
+-                        case 5:
+-                            questionDataArray = getQuestionData("Apa are gust.", "false");
+-                            break;
+-                        case 6:
+-                            questionDataArray = getQuestionData("Apa de mare este sărată.", "true");
+-                            break;
+-                        case 7:
+-                            questionDataArray = getQuestionData("Lămâia este acră.", "true");
+-                            break;
+-                        case 8:
+-                            questionDataArray = getQuestionData("Cireșii înfloresc vara.", "false");
+-                            break;
+-                        default:
+-                            questionDataArray = getQuestionData("Pinguinii zboară.", "false");
+-                    }
+-                } else setQuestion();
+-            }
+-        }else Toast.makeText(Test1_TrueFalse.this,"Sa trecem la urmatoarele intrebari",Toast.LENGTH_SHORT).show();
+-    }
+-}*/
+-
++}
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Minder</string>\r\n    <string name=\"conectare\">Conectare</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 406d37945f07a3efb7a0ca93c5b9a5c82009551b)
++++ app/src/main/res/values/strings.xml	(date 1616698380421)
+@@ -1,4 +1,9 @@
+ <resources>
+     <string name="app_name">Minder</string>
+     <string name="conectare">Conectare</string>
++
++    <string name="loading">Se incarca</string>
++
++    <!-- apare cand este eroare de la firebase -->
++    <string name="error_get_quiz">Datele nu au fost obtinute.</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/adevarat_sau_fals.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/numarIntrebare_AsauF\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.15\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/intrebareTextView_AsauF\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.255\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/trueBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"#4CAF50\"\r\n        android:text=\"Adevarat\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.531\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/falseBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"#D62525\"\r\n        android:text=\"Fals\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.674\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/nuStiuBtnAsauF\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"#2196F3\"\r\n        android:text=\"Nu stiu\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.831\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/adevarat_sau_fals.xml	(revision 406d37945f07a3efb7a0ca93c5b9a5c82009551b)
++++ app/src/main/res/layout/adevarat_sau_fals.xml	(date 1616698380403)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+@@ -68,4 +67,36 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.831" />
++
++    <TextView
++        android:id="@+id/resultText"
++        android:layout_width="260dp"
++        android:layout_height="0dp"
++        android:layout_marginStart="92dp"
++        android:layout_marginTop="275dp"
++        android:layout_marginEnd="59dp"
++        android:layout_marginBottom="424dp"
++        android:autoText="true"
++        android:background="#D36A6A"
++        android:text="TextView"
++        android:textAlignment="center"
++        android:textAppearance="@style/TextAppearance.AppCompat.Large"
++        android:textSize="24sp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <ProgressBar
++        android:id="@+id/loadingProgress"
++        style="?android:attr/progressBarStyle"
++        android:layout_width="303dp"
++        android:layout_height="336dp"
++        android:layout_marginTop="217dp"
++        android:layout_marginBottom="178dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.5"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
