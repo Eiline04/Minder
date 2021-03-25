@@ -124,7 +124,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
         questionKey.remove(randomNo);
         qKeyLength--;
     }
-
 }
 
 
