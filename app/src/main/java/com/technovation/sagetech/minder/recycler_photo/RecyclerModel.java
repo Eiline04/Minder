@@ -1,6 +1,6 @@
 package com.technovation.sagetech.minder.recycler_photo;
 
-public class RecyclerModel {
+ class RecyclerModel {
     private String imageUrl;
     private String imageName;
     public RecyclerModel() {
