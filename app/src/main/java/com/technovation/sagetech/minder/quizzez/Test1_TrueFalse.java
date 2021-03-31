@@ -37,7 +37,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
     private TextView resultText;
     private Button trueBtn;
     private Button falseBtn;
-    private Button dontKnowButton;
     private View loadingWidget;
 
     @Override
@@ -51,7 +50,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
         questionNumberTextView = findViewById(R.id.numarIntrebare_AsauF);
         trueBtn = findViewById(R.id.trueBtn);
         falseBtn = findViewById(R.id.falseBtn);
-        dontKnowButton = findViewById(R.id.nuStiuBtnAsauF);
         resultText = findViewById(R.id.resultText);
         loadingWidget = findViewById(R.id.loadingProgress);
 
@@ -85,7 +83,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
         questionNumberTextView.setVisibility(visibility);
         trueBtn.setVisibility(visibility);
         falseBtn.setVisibility(visibility);
-        dontKnowButton.setVisibility(visibility);
     }
 
     private void onLoadData(Task<DocumentSnapshot> task) {
@@ -122,7 +119,8 @@ public class Test1_TrueFalse extends AppCompatActivity {
         globalQuestionIndex += 1;
         if (globalQuestionIndex >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
             Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Test1_TrueFalse.this, Test2_WhoIsInPhoto.class));
+            startActivity(new Intent(Test1_TrueFalse.this, WhatIsInPhoto.class));
+            finish();
         } else {
             view.postDelayed(this::setQuestion, 1000);
         }
