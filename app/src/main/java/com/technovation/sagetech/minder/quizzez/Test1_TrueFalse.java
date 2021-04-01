@@ -53,7 +53,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         resultText = findViewById(R.id.resultText);
         loadingWidget = findViewById(R.id.loadingProgress);
 
-        //--------------------Get the Question data from Firestore Database------------------------
+
         setVisibilityForAll(View.INVISIBLE);
 
         firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
@@ -61,7 +61,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
         //------------Click Listener for the TRUE button
         trueBtn.setOnClickListener(this::buttonListener);
         falseBtn.setOnClickListener(this::buttonListener);
-
     }
 
     @Override
@@ -89,7 +88,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         setVisibilityForAll(View.VISIBLE);
         if (task.isSuccessful()) {
 
-            Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
+            Toast.makeText(Test1_TrueFalse.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
 
             questions = task.getResult().getData().entrySet().stream()
                     .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))
@@ -104,6 +103,8 @@ public class Test1_TrueFalse extends AppCompatActivity {
             Collections.shuffle(questions);
 
             setQuestion();
+        }else{
+            Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
         }
     }
 

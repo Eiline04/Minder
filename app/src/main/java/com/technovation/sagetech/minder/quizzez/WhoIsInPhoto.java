@@ -4,24 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
-import com.technovation.sagetech.minder.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Test2_WhoIsInPhoto extends AppCompatActivity {
+public class WhoIsInPhoto extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -65,13 +60,13 @@ public class Test2_WhoIsInPhoto extends AppCompatActivity {
                             setImage(value.get(1), value.get(2));
 
 //                            secondImage.setOnClickListener(v -> {
-//                                startActivity(new Intent(Test2_WhoIsInPhoto.this, WhatIsInPhoto.class));
+//                                startActivity(new Intent(WhoIsInPhoto.this, WhatIsInPhoto.class));
 //                                finish();
 //                            });
                         }
 
                     }else{
-                        Toast.makeText(Test2_WhoIsInPhoto.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WhoIsInPhoto.this,"Nu exista date salvate", Toast.LENGTH_SHORT).show();
                     }
 
                 });
@@ -81,12 +76,12 @@ public class Test2_WhoIsInPhoto extends AppCompatActivity {
     private void setImage(Object firstPhotoUri, Object secondPhotoUri){
 
         //---------First image-----------------
-        Glide.with(Test2_WhoIsInPhoto.this)
+        Glide.with(WhoIsInPhoto.this)
                 .load(firstPhotoUri)
                 .into(firstImage);
 
         //---------Second image-----------------
-        Glide.with(Test2_WhoIsInPhoto.this)
+        Glide.with(WhoIsInPhoto.this)
                 .load(secondPhotoUri)
                 .into(secondImage);
 
