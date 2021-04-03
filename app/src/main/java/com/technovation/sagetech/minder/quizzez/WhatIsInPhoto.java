@@ -33,7 +33,7 @@ public class WhatIsInPhoto extends AppCompatActivity {
 
     private int localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
-    List<ImageNameQuestionModel> questions;
+    private ArrayList<ImageNameQuestionModel> questions;
 
     private ImageButton objectImage;
     private TextView resultText;
@@ -80,7 +80,8 @@ public class WhatIsInPhoto extends AppCompatActivity {
 
             questions = new ArrayList<>();
             for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
-                questions.add(new ImageNameQuestionModel(entry.getKey(), (Objects) entry.getValue()));
+                //questions.add(new ImageNameQuestionModel(entry.getKey(), (Objects) entry.getValue()));
+                questions.add(new ImageNameQuestionModel(entry.getKey(), (ArrayList<Objects>) entry.getValue()));
             }
 
             Collections.shuffle(questions);
@@ -104,9 +105,12 @@ public class WhatIsInPhoto extends AppCompatActivity {
     private void setQuestionAndAnswers() {
         ImageNameQuestionModel model = questions.get(localQuestionNumber);
         setImage(model.getPhotoUri());
-        firstOption.setText(model.getOptions().get(0));
-        secondOption.setText(model.getOptions().get(1));
-        thirdOption.setText(model.getOptions().get(2));
+//        firstOption.setText(model.getOptions().get(0));
+//        secondOption.setText(model.getOptions().get(1));
+//        thirdOption.setText(model.getOptions().get(2));
+        firstOption.setText(model.getFirstOption());
+        secondOption.setText(model.getSecondOption());
+        thirdOption.setText(model.getThirdOption());
         resultText.setVisibility(View.INVISIBLE);
     }
 

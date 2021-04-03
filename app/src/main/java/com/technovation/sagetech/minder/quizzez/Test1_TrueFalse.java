@@ -29,7 +29,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
-    List<Question> questions;
+    private List<Question> questions;
     private int globalQuestionIndex;
 
     private TextView questionTextView;
