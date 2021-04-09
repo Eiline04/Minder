@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:layout_margin="30dp"
-    android:elevation="15dp">
+    android:elevation="15dp"
+    android:background="@drawable/bg_gradient">
 
     <ImageView
         android:layout_width="match_parent"
@@ -14,11 +15,12 @@
 
     <TextView
         android:id="@+id/photoName_TextView"
-        android:layout_width="300dp"
-        android:layout_height="56dp"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_extrabold"
 
         android:layout_gravity="bottom|center|center_horizontal|center_vertical"
-        android:background="#D14444"
+        android:background="@drawable/rectangle_pink_sharp"
         android:foregroundGravity="bottom|center_vertical|center|center_horizontal"
         android:gravity="bottom|center|center_horizontal|center_vertical"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

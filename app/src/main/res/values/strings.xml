@@ -6,4 +6,10 @@
 
     <!-- apare cand este eroare de la firebase -->
     <string name="error_get_quiz">Datele nu au fost obtinute.</string>
+    <string name="buna">BUNĂ!</string>
+    <string name="creeaza_un_cont_nou">creează un cont nou</string>
+    <string name="inregistrare">Înregistrare</string>
+    <string name="am_deja_un_cont_login">Am deja un cont. Login</string>
+    <string name="brain">brain</string>
+    <string name="creeaza_cont_nou">Creează cont nou</string>
 </resources>
