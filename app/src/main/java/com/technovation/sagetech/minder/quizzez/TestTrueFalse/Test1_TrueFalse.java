@@ -1,4 +1,4 @@
-package com.technovation.sagetech.minder.quizzez;
+package com.technovation.sagetech.minder.quizzez.TestTrueFalse;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,11 +16,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.technovation.sagetech.minder.R;
+import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhoto;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Test1_TrueFalse extends AppCompatActivity {
@@ -61,6 +60,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         //------------Click Listener for the TRUE button
         trueBtn.setOnClickListener(this::buttonListener);
         falseBtn.setOnClickListener(this::buttonListener);
+
     }
 
     @Override
@@ -94,16 +94,11 @@ public class Test1_TrueFalse extends AppCompatActivity {
                     .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))
                     .collect(Collectors.toList());
 
-//            questions = new ArrayList<>();
-//            for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
-//                questions.add(new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")));
-//            }
-
-
+            Collections.shuffle(questions);
             Collections.shuffle(questions);
 
             setQuestion();
-        }else{
+        } else {
             Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
         }
     }

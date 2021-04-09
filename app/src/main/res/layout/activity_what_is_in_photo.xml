@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".quizzez.WhatIsInPhoto">
+    tools:context=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto">
 
 
     <TextView
@@ -86,6 +86,8 @@
         android:id="@+id/imageResultText"
         android:layout_width="277dp"
         android:layout_height="63dp"
+        android:layout_margin="3pt"
+        android:layout_marginStart="3pt"
         android:autoText="true"
         android:background="#E6B266"
         android:text="TextView"
@@ -96,6 +98,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/questionNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Numarul intrebarii"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

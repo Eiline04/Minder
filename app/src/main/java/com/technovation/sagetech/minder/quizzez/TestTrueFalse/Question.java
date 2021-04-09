@@ -1,4 +1,4 @@
-package com.technovation.sagetech.minder.quizzez;
+package com.technovation.sagetech.minder.quizzez.TestTrueFalse;
 
 public interface Question {
 

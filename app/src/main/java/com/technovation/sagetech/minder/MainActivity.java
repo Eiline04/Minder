@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.technovation.sagetech.minder.authentication.LoginActivity;
-import com.technovation.sagetech.minder.authentication.StoreUserData;
-import com.technovation.sagetech.minder.quizzez.Test1_TrueFalse;
+import com.technovation.sagetech.minder.quizzez.TestTrueFalse.Test1_TrueFalse;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,6 @@
-package com.technovation.sagetech.minder.quizzez;
+package com.technovation.sagetech.minder.quizzez.TestTrueFalse;
+
+import com.technovation.sagetech.minder.quizzez.TestTrueFalse.Question;
 
 public class TrueFalseQuestion implements Question {
 

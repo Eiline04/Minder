@@ -1,4 +1,4 @@
-package com.technovation.sagetech.minder.quizzez;
+package com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,26 +17,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.technovation.sagetech.minder.R;
+import com.technovation.sagetech.minder.quizzez.TestWordsFittingPhotos.WordFittingPhoto;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class WhatIsInPhoto extends AppCompatActivity {
+public class WhereIsUsed extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
-    private int localQuestionNumber;
+    private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
-    private ArrayList<ImageNameQuestionModel> questions;
+    private ArrayList<WhatIsInPhotoModel> questions;
 
     private ImageButton objectImage;
     private TextView resultText;
+    private TextView questionNumber;
+    private TextView questionTextView;
 
     private Button firstOption;
     private Button secondOption;
@@ -45,7 +45,6 @@ public class WhatIsInPhoto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         setContentView(R.layout.activity_what_is_in_photo);
 
@@ -54,11 +53,14 @@ public class WhatIsInPhoto extends AppCompatActivity {
         secondOption = findViewById(R.id.secondOption);
         thirdOption = findViewById(R.id.thirdOption);
 
+        questionTextView = findViewById(R.id.guestionTextView);
+        questionTextView.setText("La ce se pot utiliza următoarele obiecte?");
         resultText = findViewById(R.id.imageResultText);
+        questionNumber = findViewById(R.id.questionNo);
         resultText.setVisibility(View.INVISIBLE);
 
         //--------------------Get the Question data from Firestore Database------------------------
-        firebaseFirestore.collection("Tests").document("WhatIsInPhoto").get().addOnCompleteListener(this::onLoadData);
+        firebaseFirestore.collection("Tests").document("WhereIsUsed").get().addOnCompleteListener(this::onLoadData);
 
         //-------------------The buttons Listeners----------------
         firstOption.setOnClickListener(button -> buttonListener((Button) button));
@@ -66,51 +68,51 @@ public class WhatIsInPhoto extends AppCompatActivity {
         thirdOption.setOnClickListener(button -> buttonListener((Button) button));
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         localQuestionNumber = 0;
     }
 
-
     private void onLoadData(Task<DocumentSnapshot> task) {
         if (task.isSuccessful()) {
 
-            Toast.makeText(WhatIsInPhoto.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(WhereIsUsed.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
 
             questions = new ArrayList<>();
             for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
-                //questions.add(new ImageNameQuestionModel(entry.getKey(), (Objects) entry.getValue()));
-                questions.add(new ImageNameQuestionModel(entry.getKey(), (ArrayList<Objects>) entry.getValue()));
+                //questions.add(new WhatIsInPhotoModel(entry.getKey(), (Objects) entry.getValue()));
+                questions.add(new WhatIsInPhotoModel(entry.getKey(), (ArrayList<Objects>) entry.getValue()));
             }
 
+            Collections.shuffle(questions);
             Collections.shuffle(questions);
             setQuestionAndAnswers();
 
         } else {
-            Toast.makeText(WhatIsInPhoto.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
+            Toast.makeText(WhereIsUsed.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
         }
 
     }
+
 
     @SuppressLint("CheckResult")
     private void setImage(Object firstPhotoUri) {
 
         //---------First image-----------------
-        Glide.with(WhatIsInPhoto.this)
+        Glide.with(WhereIsUsed.this)
                 .load(firstPhotoUri)
                 .into(objectImage);
     }
 
     private void setQuestionAndAnswers() {
-        ImageNameQuestionModel model = questions.get(localQuestionNumber);
+        WhatIsInPhotoModel model = questions.get(localQuestionNumber);
         setImage(model.getPhotoUri());
-//        firstOption.setText(model.getOptions().get(0));
-//        secondOption.setText(model.getOptions().get(1));
-//        thirdOption.setText(model.getOptions().get(2));
         firstOption.setText(model.getFirstOption());
         secondOption.setText(model.getSecondOption());
         thirdOption.setText(model.getThirdOption());
+        questionNumber.setText(String.valueOf(localQuestionNumber + 11));
         resultText.setVisibility(View.INVISIBLE);
     }
 
@@ -125,12 +127,11 @@ public class WhatIsInPhoto extends AppCompatActivity {
 
         localQuestionNumber += 1;
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
-            Toast.makeText(WhatIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WhatIsInPhoto.this, WhatIsInPhoto.class));
+            Toast.makeText(WhereIsUsed.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(WhereIsUsed.this, WordFittingPhoto.class));
             finish();
         } else {
             button.postDelayed(this::setQuestionAndAnswers, 1000);
         }
     }
-
 }
