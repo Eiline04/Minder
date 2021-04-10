@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhotoModel;
 import com.technovation.sagetech.minder.quizzez.TestWordsFittingPhotos.WordFittingPhoto;
@@ -49,6 +50,8 @@ public class WhoIsInPhoto extends AppCompatActivity {
     private TextView resultText;
     private TextView personsName;
 
+    private HashMap<String,Object> dbData;
+
     private ArrayList<List<String>> combinationOptions;
 
     @Override
@@ -68,8 +71,12 @@ public class WhoIsInPhoto extends AppCompatActivity {
 
         questionNumber = findViewById(R.id.currentExerciceIndex);
         resultText = findViewById(R.id.imageResultText);
-        personsName = findViewById(R.id.guestionTextView);
+        personsName = findViewById(R.id.questionTextView);
         resultText.setVisibility(View.INVISIBLE);
+
+        //-------------------The buttons Listeners----------------
+        firstImage.setOnClickListener(view -> buttonListener((View) view));
+        secondImage.setOnClickListener(view -> buttonListener((View) view));
     }
 
     @Override
@@ -90,6 +97,8 @@ public class WhoIsInPhoto extends AppCompatActivity {
 
             Toast.makeText(WhoIsInPhoto.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
 
+            dbData = (HashMap<String, Object>) task.getResult().getData();
+
             questions = task.getResult().getData().entrySet().stream()
                     .map(entry -> new WhoIsInPhotoModel(entry.getKey(), String.valueOf(entry.getValue())))
                     .collect(Collectors.toList());
@@ -105,21 +114,33 @@ public class WhoIsInPhoto extends AppCompatActivity {
     }
 
     private ArrayList<List<String>> getCombinations(List<WhoIsInPhotoModel> questions) {
-
+        ArrayList<List<String>> combinare = new ArrayList<>();
         WhoIsInPhotoModel model1, model2;
-        List<String> optionsArray;
+        ArrayList<String> optionsArray = new ArrayList<>();
 
         for (int i = 0; i < questions.size() - 1; i++) {
             model1 = questions.get(i);
-            model2 = questions.get(i + 1);
-            optionsArray = Arrays.asList(model1.getPhotoUri(), model2.getPhotoUri(), model1.getName());
-            combinationOptions.add(optionsArray);
-            optionsArray.clear();
-            optionsArray = Arrays.asList(model1.getPhotoUri(), model2.getPhotoUri(), model2.getName());
-            combinationOptions.add(optionsArray);
+            for(int j = i + 1; j < questions.size();j++){
+                model2 = questions.get(j);
+                optionsArray.add(0,model1.getPhotoUri());
+                optionsArray.add(1,model2.getPhotoUri());
+                optionsArray.add(2,model1.getName());
+                combinare.add(optionsArray);
+                optionsArray = new ArrayList<>();
+                combinare = new ArrayList<>(combinare);
+
+                optionsArray.add(0,model1.getPhotoUri());
+                optionsArray.add(1,model2.getPhotoUri());
+                optionsArray.add(2,model2.getName());
+                combinare.add(optionsArray);
+                optionsArray = new ArrayList<>();
+                combinare = new ArrayList<>(combinare);
+            }
         }
-        Collections.shuffle(combinationOptions);
-        return combinationOptions;
+        combinare.size();
+        Collections.shuffle(combinare);
+        Collections.shuffle(combinare);
+        return combinare;
     }
 
     @SuppressLint("CheckResult")
@@ -139,18 +160,38 @@ public class WhoIsInPhoto extends AppCompatActivity {
     }
 
     private void setQuestionAndAnswers() {
-        this.combinationOptions = getCombinations(questions);
-        List<String> combinationData = combinationOptions.get(localQuestionNumber);
+        combinationOptions = getCombinations(questions);
+        ArrayList<String> combinationData = new ArrayList<>();
+        combinationData.addAll(combinationOptions.get(localQuestionNumber));
 
         setImage(combinationData.get(0), combinationData.get(1));
-        personsName.setText(combinationData.get(2));
-        questionNumber.setText(String.valueOf(localQuestionNumber + 12));
+        personsName.setText(String.valueOf(combinationData.get(2)));
+        questionNumber.setText(String.valueOf(localQuestionNumber + 15));
         resultText.setVisibility(View.INVISIBLE);
     }
+//    private void buttonListener(View view) {
+//        String answer = String.valueOf(view.getContentDescription());
+//        Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
+//
+//        resultText.setVisibility(View.VISIBLE);
+//        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
+//        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+//
+//        localQuestionNumber += 1;
+//        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
+//            Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
+//            finish();
+//        } else {
+//            view.postDelayed(this::setQuestionAndAnswers, 1000);
+//        }
+//    }
 
-    private void buttonListener(Button button) {
-        String answer = String.valueOf(button.getContentDescription());
-        Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
+    private void buttonListener(View view) {
+        String answer = String.valueOf(dbData.get(String.valueOf(view.getContentDescription())));
+        String givenName = String.valueOf(personsName.getText());
+        // Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
+        Boolean isCorrect = answer.equals(givenName);
 
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
@@ -159,10 +200,10 @@ public class WhoIsInPhoto extends AppCompatActivity {
         localQuestionNumber += 1;
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
             Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WhoIsInPhoto.this, WhoIsInPhoto.class));
+            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
             finish();
         } else {
-            button.postDelayed(this::setQuestionAndAnswers, 1000);
+            view.postDelayed(this::setQuestionAndAnswers, 1000);
         }
     }
 

@@ -80,7 +80,7 @@ public class WordFittingPhoto extends AppCompatActivity {
 
         //-------------------The buttons Listeners----------------
         firstImage.setOnClickListener(view -> buttonListener((View) view));
-        secondImage.setOnClickListener(button -> buttonListener((Button) button));
+        secondImage.setOnClickListener(view -> buttonListener((View) view));
 
     }
 
