@@ -6,4 +6,10 @@
 
     <!-- apare cand este eroare de la firebase -->
     <string name="error_get_quiz">Datele nu au fost obtinute.</string>
+    <string name="title_activity_notificari">notificari</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>
