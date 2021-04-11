@@ -20,6 +20,7 @@ import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhoto;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Test1_TrueFalse extends AppCompatActivity {
@@ -41,8 +42,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
         setContentView(R.layout.adevarat_sau_fals);
 
         questionTextView = findViewById(R.id.intrebareTextView_AsauF);
@@ -55,8 +54,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
 
         setVisibilityForAll(View.INVISIBLE);
 
-        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
-
         //------------Click Listener for the TRUE button
         trueBtn.setOnClickListener(this::buttonListener);
         falseBtn.setOnClickListener(this::buttonListener);
@@ -68,6 +65,9 @@ public class Test1_TrueFalse extends AppCompatActivity {
         super.onStart();
         globalQuestionIndex = 0;
         resultText.setVisibility(View.INVISIBLE);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
     }
 
     /**
@@ -94,10 +94,11 @@ public class Test1_TrueFalse extends AppCompatActivity {
                     .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))
                     .collect(Collectors.toList());
 
-            Collections.shuffle(questions);
-            Collections.shuffle(questions);
+            Collections.shuffle(questions, new Random(System.currentTimeMillis() * System.currentTimeMillis()));
+
 
             setQuestion();
+
         } else {
             Toast.makeText(Test1_TrueFalse.this, getString(R.string.error_get_quiz), Toast.LENGTH_SHORT).show();
         }

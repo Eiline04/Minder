@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class WordFittingPhoto extends AppCompatActivity {
@@ -51,8 +52,11 @@ public class WordFittingPhoto extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         localQuestionNumber = 0;
-        combinationOptions = new ArrayList<ArrayList<String>>();
+        combinationOptions = new ArrayList<>();
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        //--------------------Get the Question data from Firestore Database------------------------
+        firebaseFirestore.collection("Tests").document("WordFittingPhoto").get().addOnCompleteListener(this::onLoadData);
     }
 
 
@@ -66,17 +70,11 @@ public class WordFittingPhoto extends AppCompatActivity {
         firstImage = findViewById(R.id.firstImageBtn);
         secondImage = findViewById(R.id.secondImageBtn);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
         questionNumber = findViewById(R.id.currentExerciceIndex);
         resultText = findViewById(R.id.imageResultText);
         fittingWord = findViewById(R.id.questionTextView);
         resultText.setVisibility(View.INVISIBLE);
 
-
-
-        //--------------------Get the Question data from Firestore Database------------------------
-          firebaseFirestore.collection("Tests").document("WordFittingPhoto").get().addOnCompleteListener(this::onLoadData);
 
         //-------------------The buttons Listeners----------------
         firstImage.setOnClickListener(view -> buttonListener((View) view));
@@ -95,7 +93,7 @@ public class WordFittingPhoto extends AppCompatActivity {
                     .map(entry -> new WordFittingPhotoModel(entry.getKey(), String.valueOf(entry.getValue())))
                     .collect(Collectors.toList());
 
-            Collections.shuffle(questions);
+            Collections.shuffle(questions, new Random(System.currentTimeMillis() * System.currentTimeMillis()));
              setQuestionAndAnswers();
 
         } else {
@@ -163,8 +161,8 @@ public class WordFittingPhoto extends AppCompatActivity {
 //            }
 //        }
         combinare.size();
-        Collections.shuffle(combinare);
-        Collections.shuffle(combinare);
+       // Collections.shuffle(combinare);
+        Collections.shuffle(combinare, new Random(System.currentTimeMillis()));
         return combinare;
     }
 

@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class WhoIsInPhoto extends AppCompatActivity {
@@ -65,10 +66,6 @@ public class WhoIsInPhoto extends AppCompatActivity {
         firstImage = findViewById(R.id.firstImageBtn);
         secondImage = findViewById(R.id.secondImageBtn);
 
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        user_id = firebaseAuth.getCurrentUser().getUid();
-//        firebaseFirestore = FirebaseFirestore.getInstance();
-
         questionNumber = findViewById(R.id.currentExerciceIndex);
         resultText = findViewById(R.id.imageResultText);
         personsName = findViewById(R.id.questionTextView);
@@ -103,8 +100,7 @@ public class WhoIsInPhoto extends AppCompatActivity {
                     .map(entry -> new WhoIsInPhotoModel(entry.getKey(), String.valueOf(entry.getValue())))
                     .collect(Collectors.toList());
 
-
-            Collections.shuffle(questions);
+            Collections.shuffle(questions, new Random(System.currentTimeMillis() * System.currentTimeMillis()));
             setQuestionAndAnswers();
 
         } else {
@@ -138,8 +134,8 @@ public class WhoIsInPhoto extends AppCompatActivity {
             }
         }
         combinare.size();
-        Collections.shuffle(combinare);
-        Collections.shuffle(combinare);
+        //Collections.shuffle(combinare);
+        Collections.shuffle(combinare, new Random(System.currentTimeMillis()));
         return combinare;
     }
 
@@ -188,10 +184,9 @@ public class WhoIsInPhoto extends AppCompatActivity {
 //    }
 
     private void buttonListener(View view) {
-        String answer = String.valueOf(dbData.get(String.valueOf(view.getContentDescription())));
+        String answer =String.valueOf(view.getContentDescription());
         String givenName = String.valueOf(personsName.getText());
-        // Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
-        Boolean isCorrect = answer.equals(givenName);
+        boolean isCorrect = answer.equals(String.valueOf(dbData.get(givenName)));
 
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);

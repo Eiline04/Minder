@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class WhereIsUsed extends AppCompatActivity {
 
@@ -45,7 +46,6 @@ public class WhereIsUsed extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         setContentView(R.layout.activity_what_is_in_photo);
 
         objectImage = findViewById(R.id.firstObjectWhatIsImage);
@@ -59,9 +59,6 @@ public class WhereIsUsed extends AppCompatActivity {
         questionNumber = findViewById(R.id.questionNo);
         resultText.setVisibility(View.INVISIBLE);
 
-        //--------------------Get the Question data from Firestore Database------------------------
-        firebaseFirestore.collection("Tests").document("WhereIsUsed").get().addOnCompleteListener(this::onLoadData);
-
         //-------------------The buttons Listeners----------------
         firstOption.setOnClickListener(button -> buttonListener((Button) button));
         secondOption.setOnClickListener(button -> buttonListener((Button) button));
@@ -73,6 +70,11 @@ public class WhereIsUsed extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         localQuestionNumber = 0;
+
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        //--------------------Get the Question data from Firestore Database------------------------
+        firebaseFirestore.collection("Tests").document("WhereIsUsed").get().addOnCompleteListener(this::onLoadData);
     }
 
     private void onLoadData(Task<DocumentSnapshot> task) {
@@ -86,8 +88,7 @@ public class WhereIsUsed extends AppCompatActivity {
                 questions.add(new WhatIsInPhotoModel(entry.getKey(), (ArrayList<Objects>) entry.getValue()));
             }
 
-            Collections.shuffle(questions);
-            Collections.shuffle(questions);
+            Collections.shuffle(questions, new Random(System.currentTimeMillis() * System.currentTimeMillis()));
             setQuestionAndAnswers();
 
         } else {
