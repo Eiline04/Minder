@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.GlobalUtilities;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWordsFittingPhotos.WordFittingPhoto;
 
@@ -30,6 +32,7 @@ public class WhereIsUsed extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
+    private GlobalUtilities aux;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private ArrayList<WhatIsInPhotoModel> questions;
@@ -70,7 +73,7 @@ public class WhereIsUsed extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         localQuestionNumber = 0;
-
+        aux = new GlobalUtilities();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         //--------------------Get the Question data from Firestore Database------------------------
@@ -113,7 +116,8 @@ public class WhereIsUsed extends AppCompatActivity {
         firstOption.setText(model.getFirstOption());
         secondOption.setText(model.getSecondOption());
         thirdOption.setText(model.getThirdOption());
-        questionNumber.setText(String.valueOf(localQuestionNumber + 11));
+        //questionNumber.setText(String.valueOf(localQuestionNumber + 11));
+        questionNumber.setText(String.valueOf(aux.getGLOBAL_INDEX(aux.setGLOBAL_INDEX())));
         resultText.setVisibility(View.INVISIBLE);
     }
 
@@ -127,6 +131,7 @@ public class WhereIsUsed extends AppCompatActivity {
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
 
         localQuestionNumber += 1;
+
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
             Toast.makeText(WhereIsUsed.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WhereIsUsed.this, WordFittingPhoto.class));

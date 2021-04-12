@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.GlobalUtilities;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhoIsInPhoto.WhoIsInPhoto;
 
@@ -29,6 +31,7 @@ public class WhatIsInPhoto extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
+    private GlobalUtilities aux;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private ArrayList<WhatIsInPhotoModel> questions;
@@ -65,6 +68,8 @@ public class WhatIsInPhoto extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         localQuestionNumber = 0;
+        aux = new GlobalUtilities();
+
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         //--------------------Get the Question data from Firestore Database------------------------
@@ -107,7 +112,8 @@ public class WhatIsInPhoto extends AppCompatActivity {
         firstOption.setText(model.getFirstOption());
         secondOption.setText(model.getSecondOption());
         thirdOption.setText(model.getThirdOption());
-        questionNumber.setText(String.valueOf(localQuestionNumber + 6));
+        //questionNumber.setText(String.valueOf(localQuestionNumber + 6));
+        questionNumber.setText(String.valueOf(aux.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
     }
 

@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.technovation.sagetech.minder.GlobalUtilities;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhoto;
 
@@ -30,7 +31,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
 
     private List<Question> questions;
-    private int globalQuestionIndex;
+    private int localQuestionIndex;
 
     private TextView questionTextView;
     private TextView questionNumberTextView;
@@ -38,6 +39,8 @@ public class Test1_TrueFalse extends AppCompatActivity {
     private Button trueBtn;
     private Button falseBtn;
     private View loadingWidget;
+
+    private GlobalUtilities aux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,8 @@ public class Test1_TrueFalse extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        globalQuestionIndex = 0;
+        localQuestionIndex = 0;
+        aux = new GlobalUtilities();
         resultText.setVisibility(View.INVISIBLE);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -107,14 +111,15 @@ public class Test1_TrueFalse extends AppCompatActivity {
     private void buttonListener(View view) {
 
         Boolean answer = view.getId() == R.id.trueBtn;
-        Boolean isCorrect = questions.get(globalQuestionIndex).isCorrect(answer);
+        Boolean isCorrect = questions.get(localQuestionIndex).isCorrect(answer);
 
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
 
-        globalQuestionIndex += 1;
-        if (globalQuestionIndex >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
+        localQuestionIndex += 1;
+
+        if (localQuestionIndex >= Math.min(NUMBER_OF_QUESTIONS, questions.size())) {
             Toast.makeText(Test1_TrueFalse.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Test1_TrueFalse.this, WhatIsInPhoto.class));
             finish();
@@ -124,8 +129,9 @@ public class Test1_TrueFalse extends AppCompatActivity {
     }
 
     private void setQuestion() {
-        questionTextView.setText(String.valueOf(questions.get(globalQuestionIndex).getQuestion()));
-        questionNumberTextView.setText(String.valueOf(globalQuestionIndex + 1));
+        questionTextView.setText(String.valueOf(questions.get(localQuestionIndex).getQuestion()));
+        //questionNumberTextView.setText(String.valueOf(globalQuestionIndex + 1));
+        questionNumberTextView.setText(String.valueOf(aux.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
     }
 }

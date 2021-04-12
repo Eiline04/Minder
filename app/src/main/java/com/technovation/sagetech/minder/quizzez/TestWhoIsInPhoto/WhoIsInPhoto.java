@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.GlobalUtilities;
 import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhotoModel;
@@ -37,6 +38,7 @@ public class WhoIsInPhoto extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
+    private GlobalUtilities aux;
     private String user_id;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
@@ -80,6 +82,8 @@ public class WhoIsInPhoto extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         localQuestionNumber = 0;
+
+        aux = new GlobalUtilities();
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -162,26 +166,10 @@ public class WhoIsInPhoto extends AppCompatActivity {
 
         setImage(combinationData.get(0), combinationData.get(1));
         personsName.setText(String.valueOf(combinationData.get(2)));
-        questionNumber.setText(String.valueOf(localQuestionNumber + 15));
+        //questionNumber.setText(String.valueOf(localQuestionNumber + 21));
+        questionNumber.setText(String.valueOf(aux.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
     }
-//    private void buttonListener(View view) {
-//        String answer = String.valueOf(view.getContentDescription());
-//        Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
-//
-//        resultText.setVisibility(View.VISIBLE);
-//        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
-//        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
-//
-//        localQuestionNumber += 1;
-//        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
-//            Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
-//            finish();
-//        } else {
-//            view.postDelayed(this::setQuestionAndAnswers, 1000);
-//        }
-//    }
 
     private void buttonListener(View view) {
         String answer =String.valueOf(view.getContentDescription());
@@ -193,6 +181,7 @@ public class WhoIsInPhoto extends AppCompatActivity {
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
 
         localQuestionNumber += 1;
+
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
             Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));

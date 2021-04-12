@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.GlobalUtilities;
+import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhoIsInPhoto.WhoIsInPhoto;
 
@@ -32,6 +34,7 @@ public class WordFittingPhoto extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
+    private GlobalUtilities aux;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private List<WordFittingPhotoModel> questions;
@@ -53,6 +56,8 @@ public class WordFittingPhoto extends AppCompatActivity {
         super.onStart();
         localQuestionNumber = 0;
         combinationOptions = new ArrayList<>();
+
+        aux = new GlobalUtilities();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         //--------------------Get the Question data from Firestore Database------------------------
@@ -110,7 +115,8 @@ public class WordFittingPhoto extends AppCompatActivity {
 
         setImage(combinationData.get(0), combinationData.get(1));
         fittingWord.setText(String.valueOf(combinationData.get(2)));
-        questionNumber.setText(String.valueOf(localQuestionNumber + 15));
+        //questionNumber.setText(String.valueOf(localQuestionNumber + 16));
+        questionNumber.setText(String.valueOf(aux.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
     }
 
@@ -127,10 +133,8 @@ public class WordFittingPhoto extends AppCompatActivity {
                 optionsArray.add(1,model2.getPhotoUri());
                 optionsArray.add(2,model1.getFittingWord());
                 combinare.add(optionsArray);
-               // combinare.size();
                 optionsArray = new ArrayList<>();
-                combinare = new ArrayList<ArrayList<String>>(combinare);
-               // combinare.size();
+                combinare = new ArrayList<>(combinare);
 
                 optionsArray.add(0,model1.getPhotoUri());
                 optionsArray.add(1,model2.getPhotoUri());
@@ -140,28 +144,7 @@ public class WordFittingPhoto extends AppCompatActivity {
                 combinare = new ArrayList<ArrayList<String>>(combinare);
             }
         }
-
-//        for(WordFittingPhotoModel option: questions){
-//            int factorialLength = 1;
-//            for(int i = 1; i<= questions.size();i++) factorialLength *= i;
-//            int length = factorialLength / (2 * questions.size() - 4);
-//            while(combinare.size() <= length) combinare.add(new ArrayList<String>());
-//        }
-//        for (int i = 0; i < questions.size() - 1; i++) {
-//            model1 = questions.get(i);
-//            for(int j = i + 1; j < questions.size();j++){
-//                model2 = questions.get(j);
-//                optionsArray.add(0,model1.getFittingWord());
-//                optionsArray.add(1,model1.getPhotoUri());
-//                optionsArray.add(2,model2.getPhotoUri());
-//                combinare.add(optionsArray);
-//                combinare.size();
-//                optionsArray.clear();
-//                combinare.size();
-//            }
-//        }
         combinare.size();
-       // Collections.shuffle(combinare);
         Collections.shuffle(combinare, new Random(System.currentTimeMillis()));
         return combinare;
     }
@@ -186,7 +169,6 @@ public class WordFittingPhoto extends AppCompatActivity {
     private void buttonListener(View view) {
         String answer = String.valueOf(dbData.get(String.valueOf(view.getContentDescription())));
         String givenName = String.valueOf(fittingWord.getText());
-       // Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
         Boolean isCorrect = answer.equals(givenName);
 
         resultText.setVisibility(View.VISIBLE);
