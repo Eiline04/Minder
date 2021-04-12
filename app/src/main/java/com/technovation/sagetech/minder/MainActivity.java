@@ -10,7 +10,7 @@ import com.technovation.sagetech.minder.quizzez.TestTrueFalse.Test1_TrueFalse;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startBtn, settings;
+    private Button startBtn, settings, buttontest;
 
 
     @Override
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startBtn);
         settings = findViewById(R.id.settings);
+        buttontest = findViewById(R.id.button2);
 
         //------------Start Test1_TrueFalse Activity---------------
         startBtn.setOnClickListener(v -> {
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         //------------Start SettingsActivity---------------
         settings.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            finish();
+        });
+
+        // test
+
+        buttontest.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, Intro.class));
             finish();
         });
     }
