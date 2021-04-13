@@ -38,20 +38,20 @@ public class WhoIsInPhoto extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
-    private GlobalUtilities aux;
     private String user_id;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private List<WhoIsInPhotoModel> questions;
 
-    private ProgressDialog progressDialog;
+    private View loadingWidget;
 
     private ImageButton firstImage;
     private ImageButton secondImage;
 
-    private TextView questionNumber;
+    private TextView questionTextView;
     private TextView resultText;
     private TextView personsName;
+    private TextView questionNumber;
 
     private HashMap<String,Object> dbData;
 
@@ -60,19 +60,19 @@ public class WhoIsInPhoto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_test2_who_photo);
 
-        progressDialog = new ProgressDialog(this);
-
+        personsName = findViewById(R.id.questionTextView);
         firstImage = findViewById(R.id.firstImageBtn);
         secondImage = findViewById(R.id.secondImageBtn);
 
+        loadingWidget = findViewById(R.id.loadingProgress);
         questionNumber = findViewById(R.id.currentExerciceIndex);
+        questionTextView = findViewById(R.id.instructionsTextView);
         resultText = findViewById(R.id.imageResultText);
-        personsName = findViewById(R.id.questionTextView);
-        resultText.setVisibility(View.INVISIBLE);
 
+        resultText.setVisibility(View.INVISIBLE);
+        setVisibilityForAll(View.INVISIBLE);
         //-------------------The buttons Listeners----------------
         firstImage.setOnClickListener(view -> buttonListener((View) view));
         secondImage.setOnClickListener(view -> buttonListener((View) view));
@@ -82,8 +82,6 @@ public class WhoIsInPhoto extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         localQuestionNumber = 0;
-
-        aux = new GlobalUtilities();
 
         firebaseAuth = FirebaseAuth.getInstance();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -113,6 +111,43 @@ public class WhoIsInPhoto extends AppCompatActivity {
 
     }
 
+    private void buttonListener(View view) {
+        //------------MAKING THE BUTTONS nonCLICKABLE-----------------
+        GlobalUtilities.setTwoClickableFalse(firstImage,secondImage);
+
+        String answer =String.valueOf(view.getContentDescription());
+        String givenName = String.valueOf(personsName.getText());
+        boolean isCorrect = answer.equals(String.valueOf(dbData.get(givenName)));
+
+        resultText.setVisibility(View.VISIBLE);
+        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
+        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+
+        localQuestionNumber += 1;
+
+        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
+            Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
+            finish();
+        } else {
+            view.postDelayed(this::setQuestionAndAnswers, 1000);
+        }
+    }
+
+    private void setQuestionAndAnswers() {
+        combinationOptions = getCombinations(questions);
+        ArrayList<String> combinationData = new ArrayList<>();
+        combinationData.addAll(combinationOptions.get(localQuestionNumber));
+
+        setImage(combinationData.get(0), combinationData.get(1));
+        personsName.setText(String.valueOf(combinationData.get(2)));
+        questionNumber.setText(String.valueOf(GlobalUtilities.setGLOBAL_INDEX()));
+        resultText.setVisibility(View.INVISIBLE);
+
+        //------------MAKING THE BUTTONS CLICKABLE AGAIN-----------------
+        GlobalUtilities.setTwoClickableTrue(firstImage,secondImage);
+    }
+
     private ArrayList<List<String>> getCombinations(List<WhoIsInPhotoModel> questions) {
         ArrayList<List<String>> combinare = new ArrayList<>();
         WhoIsInPhotoModel model1, model2;
@@ -138,8 +173,7 @@ public class WhoIsInPhoto extends AppCompatActivity {
             }
         }
         combinare.size();
-        //Collections.shuffle(combinare);
-        Collections.shuffle(combinare, new Random(System.currentTimeMillis()));
+        Collections.shuffle(combinare, new Random(System.currentTimeMillis() * System.currentTimeMillis()));
         return combinare;
     }
 
@@ -157,38 +191,23 @@ public class WhoIsInPhoto extends AppCompatActivity {
                 .load(secondPhotoUri)
                 .into(secondImage);
         secondImage.setContentDescription(String.valueOf(secondPhotoUri));
+
+        setVisibilityForAll(View.VISIBLE);
     }
 
-    private void setQuestionAndAnswers() {
-        combinationOptions = getCombinations(questions);
-        ArrayList<String> combinationData = new ArrayList<>();
-        combinationData.addAll(combinationOptions.get(localQuestionNumber));
-
-        setImage(combinationData.get(0), combinationData.get(1));
-        personsName.setText(String.valueOf(combinationData.get(2)));
-        //questionNumber.setText(String.valueOf(localQuestionNumber + 21));
-        questionNumber.setText(String.valueOf(aux.setGLOBAL_INDEX()));
-        resultText.setVisibility(View.INVISIBLE);
-    }
-
-    private void buttonListener(View view) {
-        String answer =String.valueOf(view.getContentDescription());
-        String givenName = String.valueOf(personsName.getText());
-        boolean isCorrect = answer.equals(String.valueOf(dbData.get(givenName)));
-
-        resultText.setVisibility(View.VISIBLE);
-        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
-        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
-
-        localQuestionNumber += 1;
-
-        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
-            Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
-            finish();
-        } else {
-            view.postDelayed(this::setQuestionAndAnswers, 1000);
-        }
+    /**
+     * Sets the visibility for all widgets
+     * Loading widget has the visibility flipped
+     *
+     * @param visibility View.VISIBLE or View.INVISIBLE
+     */
+    private void setVisibilityForAll(int visibility) {
+        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+       personsName.setVisibility(visibility);
+        questionTextView.setVisibility(visibility);
+        questionNumber.setVisibility(visibility);
+        firstImage.setVisibility(visibility);
+        secondImage.setVisibility(visibility);
     }
 
 }

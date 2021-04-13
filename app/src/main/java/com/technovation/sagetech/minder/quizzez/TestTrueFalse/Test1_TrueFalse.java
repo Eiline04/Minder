@@ -40,7 +40,15 @@ public class Test1_TrueFalse extends AppCompatActivity {
     private Button falseBtn;
     private View loadingWidget;
 
-    private GlobalUtilities aux;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        localQuestionIndex = 0;
+        resultText.setVisibility(View.INVISIBLE);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,31 +71,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        localQuestionIndex = 0;
-        aux = new GlobalUtilities();
-        resultText.setVisibility(View.INVISIBLE);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("Tests").document("TrueFalse").get().addOnCompleteListener(this::onLoadData);
-    }
-
-    /**
-     * Sets the visibility for all widgets
-     * Loading widget has the visibility flipped
-     *
-     * @param visibility View.VISIBLE or View.INVISIBLE
-     */
-    private void setVisibilityForAll(int visibility) {
-        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
-        questionTextView.setVisibility(visibility);
-        questionNumberTextView.setVisibility(visibility);
-        trueBtn.setVisibility(visibility);
-        falseBtn.setVisibility(visibility);
-    }
-
     private void onLoadData(Task<DocumentSnapshot> task) {
         setVisibilityForAll(View.VISIBLE);
         if (task.isSuccessful()) {
@@ -108,7 +91,11 @@ public class Test1_TrueFalse extends AppCompatActivity {
         }
     }
 
+
+
     private void buttonListener(View view) {
+
+        GlobalUtilities.setTwoClickableFalse(trueBtn,falseBtn);
 
         Boolean answer = view.getId() == R.id.trueBtn;
         Boolean isCorrect = questions.get(localQuestionIndex).isCorrect(answer);
@@ -130,8 +117,25 @@ public class Test1_TrueFalse extends AppCompatActivity {
 
     private void setQuestion() {
         questionTextView.setText(String.valueOf(questions.get(localQuestionIndex).getQuestion()));
-        //questionNumberTextView.setText(String.valueOf(globalQuestionIndex + 1));
-        questionNumberTextView.setText(String.valueOf(aux.setGLOBAL_INDEX()));
+        questionNumberTextView.setText(String.valueOf(GlobalUtilities.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
+
+        GlobalUtilities.setTwoClickableTrue(trueBtn,falseBtn);
     }
+
+    /**
+     * Sets the visibility for all widgets
+     * Loading widget has the visibility flipped
+     *
+     * @param visibility View.VISIBLE or View.INVISIBLE
+     */
+    private void setVisibilityForAll(int visibility) {
+        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        questionTextView.setVisibility(visibility);
+        questionNumberTextView.setVisibility(visibility);
+        trueBtn.setVisibility(visibility);
+        falseBtn.setVisibility(visibility);
+    }
+
+
 }

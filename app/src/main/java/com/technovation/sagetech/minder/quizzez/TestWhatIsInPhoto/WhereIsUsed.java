@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.technovation.sagetech.minder.GlobalUtilities;
-import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWordsFittingPhotos.WordFittingPhoto;
 
@@ -32,11 +31,11 @@ public class WhereIsUsed extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
-    private GlobalUtilities aux;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private ArrayList<WhatIsInPhotoModel> questions;
 
+    private View loadingWidget;
     private ImageButton objectImage;
     private TextView resultText;
     private TextView questionNumber;
@@ -47,20 +46,33 @@ public class WhereIsUsed extends AppCompatActivity {
     private Button thirdOption;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        localQuestionNumber = 0;
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        //--------------------Get the Question data from Firestore Database------------------------
+        firebaseFirestore.collection("Tests").document("WhereIsUsed").get().addOnCompleteListener(this::onLoadData);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_what_is_in_photo);
 
+        loadingWidget = findViewById(R.id.loadingProgress);
         objectImage = findViewById(R.id.firstObjectWhatIsImage);
         firstOption = findViewById(R.id.firstOption);
         secondOption = findViewById(R.id.secondOption);
         thirdOption = findViewById(R.id.thirdOption);
 
-        questionTextView = findViewById(R.id.guestionTextView);
+        questionTextView = findViewById(R.id.questionFinalTextView);
         questionTextView.setText("La ce se pot utiliza următoarele obiecte?");
+
         resultText = findViewById(R.id.imageResultText);
         questionNumber = findViewById(R.id.questionNo);
+
         resultText.setVisibility(View.INVISIBLE);
+        setVisibilityForAll(View.INVISIBLE);
 
         //-------------------The buttons Listeners----------------
         firstOption.setOnClickListener(button -> buttonListener((Button) button));
@@ -68,17 +80,6 @@ public class WhereIsUsed extends AppCompatActivity {
         thirdOption.setOnClickListener(button -> buttonListener((Button) button));
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        localQuestionNumber = 0;
-        aux = new GlobalUtilities();
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        //--------------------Get the Question data from Firestore Database------------------------
-        firebaseFirestore.collection("Tests").document("WhereIsUsed").get().addOnCompleteListener(this::onLoadData);
-    }
 
     private void onLoadData(Task<DocumentSnapshot> task) {
         if (task.isSuccessful()) {
@@ -100,28 +101,10 @@ public class WhereIsUsed extends AppCompatActivity {
 
     }
 
-
-    @SuppressLint("CheckResult")
-    private void setImage(Object firstPhotoUri) {
-
-        //---------First image-----------------
-        Glide.with(WhereIsUsed.this)
-                .load(firstPhotoUri)
-                .into(objectImage);
-    }
-
-    private void setQuestionAndAnswers() {
-        WhatIsInPhotoModel model = questions.get(localQuestionNumber);
-        setImage(model.getPhotoUri());
-        firstOption.setText(model.getFirstOption());
-        secondOption.setText(model.getSecondOption());
-        thirdOption.setText(model.getThirdOption());
-        //questionNumber.setText(String.valueOf(localQuestionNumber + 11));
-        questionNumber.setText(String.valueOf(aux.getGLOBAL_INDEX(aux.setGLOBAL_INDEX())));
-        resultText.setVisibility(View.INVISIBLE);
-    }
-
     private void buttonListener(Button button) {
+
+        //--------MAKING THE BUTTONS nonCLICKABLE------------
+        GlobalUtilities.setThreeClickableFalse(firstOption,secondOption,thirdOption);
 
         String answer = (String) button.getText();
         Boolean isCorrect = questions.get(localQuestionNumber).isCorrect(answer);
@@ -140,4 +123,45 @@ public class WhereIsUsed extends AppCompatActivity {
             button.postDelayed(this::setQuestionAndAnswers, 1000);
         }
     }
+
+    private void setQuestionAndAnswers() {
+        WhatIsInPhotoModel model = questions.get(localQuestionNumber);
+        setImage(model.getPhotoUri());
+        firstOption.setText(model.getFirstOption());
+        secondOption.setText(model.getSecondOption());
+        thirdOption.setText(model.getThirdOption());
+        questionNumber.setText(String.valueOf(GlobalUtilities.setGLOBAL_INDEX()));
+        resultText.setVisibility(View.INVISIBLE);
+
+        //------------MAKING THE BUTTONS CLICKABLE AGAIN-----------------
+        GlobalUtilities.setThreeClickableTrue(firstOption,secondOption,thirdOption);
+    }
+
+    @SuppressLint("CheckResult")
+    private void setImage(Object firstPhotoUri) {
+
+        //---------First image-----------------
+        Glide.with(WhereIsUsed.this)
+                .load(firstPhotoUri)
+                .into(objectImage);
+
+        setVisibilityForAll(View.VISIBLE);
+    }
+
+    /**
+     * Sets the visibility for all widgets
+     * Loading widget has the visibility flipped
+     *
+     * @param visibility View.VISIBLE or View.INVISIBLE
+     */
+    private void setVisibilityForAll(int visibility) {
+        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        objectImage.setVisibility(visibility);
+        questionNumber.setVisibility(visibility);
+        firstOption.setVisibility(visibility);
+        secondOption.setVisibility(visibility);
+        thirdOption.setVisibility(visibility);
+        questionTextView.setVisibility(visibility);
+    }
+
 }

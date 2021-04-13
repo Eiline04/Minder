@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,17 +35,17 @@ public class WordFittingPhoto extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
 
-    private GlobalUtilities aux;
     private Integer localQuestionNumber;
     private static final Integer NUMBER_OF_QUESTIONS = 5;
     private List<WordFittingPhotoModel> questions;
 
-    private ProgressDialog progressDialog;
+    private View loadingWidget;
 
     private ImageButton firstImage;
     private ImageButton secondImage;
 
     private TextView questionNumber;
+    private TextView questionTextView;
     private TextView resultText;
     private TextView fittingWord;
 
@@ -57,8 +58,6 @@ public class WordFittingPhoto extends AppCompatActivity {
         localQuestionNumber = 0;
         combinationOptions = new ArrayList<>();
 
-        aux = new GlobalUtilities();
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         //--------------------Get the Question data from Firestore Database------------------------
         firebaseFirestore.collection("Tests").document("WordFittingPhoto").get().addOnCompleteListener(this::onLoadData);
@@ -70,16 +69,18 @@ public class WordFittingPhoto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test2_who_photo);
 
-        progressDialog = new ProgressDialog(this);
+        loadingWidget = findViewById(R.id.loadingProgress);
 
         firstImage = findViewById(R.id.firstImageBtn);
         secondImage = findViewById(R.id.secondImageBtn);
 
         questionNumber = findViewById(R.id.currentExerciceIndex);
+        questionTextView = findViewById(R.id.instructionsTextView);
         resultText = findViewById(R.id.imageResultText);
         fittingWord = findViewById(R.id.questionTextView);
-        resultText.setVisibility(View.INVISIBLE);
 
+        resultText.setVisibility(View.INVISIBLE);
+        setVisibilityForAll(View.INVISIBLE);
 
         //-------------------The buttons Listeners----------------
         firstImage.setOnClickListener(view -> buttonListener((View) view));
@@ -107,6 +108,27 @@ public class WordFittingPhoto extends AppCompatActivity {
 
     }
 
+    private void buttonListener(View view) {
+        //------------MAKING THE BUTTONS nonCLICKABLE-----------------
+        GlobalUtilities.setTwoClickableFalse(firstImage,secondImage);
+
+        String answer = String.valueOf(dbData.get(String.valueOf(view.getContentDescription())));
+        String givenName = String.valueOf(fittingWord.getText());
+        Boolean isCorrect = answer.equals(givenName);
+
+        resultText.setVisibility(View.VISIBLE);
+        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
+        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+
+        localQuestionNumber += 1;
+        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
+            Toast.makeText(WordFittingPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(WordFittingPhoto.this, WhoIsInPhoto.class));
+            finish();
+        } else {
+            view.postDelayed(this::setQuestionAndAnswers, 1000);
+        }
+    }
 
     private void setQuestionAndAnswers() {
         combinationOptions = getCombinations(questions);
@@ -115,9 +137,11 @@ public class WordFittingPhoto extends AppCompatActivity {
 
         setImage(combinationData.get(0), combinationData.get(1));
         fittingWord.setText(String.valueOf(combinationData.get(2)));
-        //questionNumber.setText(String.valueOf(localQuestionNumber + 16));
-        questionNumber.setText(String.valueOf(aux.setGLOBAL_INDEX()));
+        questionNumber.setText(String.valueOf(GlobalUtilities.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
+
+        //------------MAKING THE BUTTONS CLICKABLE AGAIN-----------------
+        GlobalUtilities.setTwoClickableTrue(firstImage,secondImage);
     }
 
     private ArrayList<ArrayList<String>> getCombinations(List<WordFittingPhotoModel> questions) {
@@ -163,26 +187,21 @@ public class WordFittingPhoto extends AppCompatActivity {
                 .load(secondPhotoUri)
                 .into(secondImage);
         secondImage.setContentDescription(String.valueOf(secondPhotoUri));
+        setVisibilityForAll(View.VISIBLE);
     }
 
-
-    private void buttonListener(View view) {
-        String answer = String.valueOf(dbData.get(String.valueOf(view.getContentDescription())));
-        String givenName = String.valueOf(fittingWord.getText());
-        Boolean isCorrect = answer.equals(givenName);
-
-        resultText.setVisibility(View.VISIBLE);
-        resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
-        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
-
-        localQuestionNumber += 1;
-        if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
-            Toast.makeText(WordFittingPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WordFittingPhoto.this, WhoIsInPhoto.class));
-            finish();
-        } else {
-            view.postDelayed(this::setQuestionAndAnswers, 1000);
-        }
+    /**
+     * Sets the visibility for all widgets
+     * Loading widget has the visibility flipped
+     *
+     * @param visibility View.VISIBLE or View.INVISIBLE
+     */
+    private void setVisibilityForAll(int visibility) {
+        loadingWidget.setVisibility(visibility == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        fittingWord.setVisibility(visibility);
+        questionTextView.setVisibility(visibility);
+        questionNumber.setVisibility(visibility);
+        firstImage.setVisibility(visibility);
+        secondImage.setVisibility(visibility);
     }
-
 }
