@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".SettingsActivity"
+    android:background="@drawable/bg_gradient">
 
     <Button
         android:id="@+id/signOutButton"
@@ -29,7 +30,7 @@
         android:background="@drawable/rectangle_purple_round"
         android:fontFamily="@font/poppins_extrabold"
         android:text="  Adaugă imagini  "
-        android:textColor="#fff"
+        android:textColor="#FFDBFB"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
