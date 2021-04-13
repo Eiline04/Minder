@@ -13,13 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".quizzez.TestWhatIsInPhoto.WhereIsUsed"></activity>
+        <activity android:name=".EndTestScore"></activity>
+        <activity android:name=".quizzez.TestWhatIsInPhoto.WhereIsUsed" />
         <activity android:name=".IntroductionMap" />
         <activity android:name=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".quizzez.TestWhoIsInPhoto.WhoIsInPhoto" />
         <activity android:name=".quizzez.TestTrueFalse.Test1_TrueFalse" />
-        <activity android:name=".quizzez.TestWordsFittingPhotos.WordFittingPhoto"/>
+        <activity android:name=".quizzez.TestWordsFittingPhotos.WordFittingPhoto" />
         <activity android:name=".recycler_photo.ShowPhotoActivity" />
         <activity android:name=".authentication.StoreUserData" />
         <activity android:name=".MainActivity" />

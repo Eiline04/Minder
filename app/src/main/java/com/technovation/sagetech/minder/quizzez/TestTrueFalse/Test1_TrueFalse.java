@@ -44,6 +44,8 @@ public class Test1_TrueFalse extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         localQuestionIndex = 0;
+        GlobalUtilities.GLOBAL_INDEX = 0;
+        GlobalUtilities.TOTAL_SCORE = 0;
         resultText.setVisibility(View.INVISIBLE);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -92,10 +94,9 @@ public class Test1_TrueFalse extends AppCompatActivity {
     }
 
 
-
     private void buttonListener(View view) {
 
-        GlobalUtilities.setTwoClickableFalse(trueBtn,falseBtn);
+        GlobalUtilities.setTwoClickableFalse(trueBtn, falseBtn);
 
         Boolean answer = view.getId() == R.id.trueBtn;
         Boolean isCorrect = questions.get(localQuestionIndex).isCorrect(answer);
@@ -103,6 +104,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+        if(isCorrect) GlobalUtilities.increaseScore();
 
         localQuestionIndex += 1;
 
@@ -120,7 +122,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         questionNumberTextView.setText(String.valueOf(GlobalUtilities.setGLOBAL_INDEX()));
         resultText.setVisibility(View.INVISIBLE);
 
-        GlobalUtilities.setTwoClickableTrue(trueBtn,falseBtn);
+        GlobalUtilities.setTwoClickableTrue(trueBtn, falseBtn);
     }
 
     /**

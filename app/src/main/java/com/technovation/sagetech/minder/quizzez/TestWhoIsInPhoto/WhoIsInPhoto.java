@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.technovation.sagetech.minder.EndTestScore;
 import com.technovation.sagetech.minder.GlobalUtilities;
 import com.technovation.sagetech.minder.MainActivity;
 import com.technovation.sagetech.minder.R;
@@ -122,12 +123,13 @@ public class WhoIsInPhoto extends AppCompatActivity {
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+        if(isCorrect) GlobalUtilities.increaseScore();
 
         localQuestionNumber += 1;
 
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {
             Toast.makeText(WhoIsInPhoto.this, "Să trecem la urmatoarele întrebări!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WhoIsInPhoto.this, MainActivity.class));
+            startActivity(new Intent(WhoIsInPhoto.this, EndTestScore.class));
             finish();
         } else {
             view.postDelayed(this::setQuestionAndAnswers, 1000);

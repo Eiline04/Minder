@@ -119,6 +119,7 @@ public class WordFittingPhoto extends AppCompatActivity {
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
         resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+        if(isCorrect) GlobalUtilities.increaseScore();
 
         localQuestionNumber += 1;
         if (localQuestionNumber >= Math.min(NUMBER_OF_QUESTIONS, combinationOptions.size())) {

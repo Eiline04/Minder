@@ -44,7 +44,9 @@ public class GlobalUtilities {
 
     /** -------------------Score related functions-----------------------**/
     public static String getScorePercentage(){
-        float percentageScore = (float) TOTAL_SCORE/TOTAL_QUESTIONS * 100;
+        float percentageScore = (float) TOTAL_SCORE/TOTAL_QUESTIONS * 10;
         return String.valueOf(percentageScore + "% ");
     }
+
+    public static void increaseScore(){TOTAL_SCORE += 10;}
 }
