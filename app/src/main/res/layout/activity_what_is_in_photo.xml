@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto">
+    tools:context=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto"
+    android:background="@drawable/bg_gradient">
 
 
     <ProgressBar
@@ -23,19 +24,21 @@
     <TextView
         android:id="@+id/questionFinalTextView"
         android:layout_width="0dp"
-        android:layout_height="47dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/rectangle_purple_round"
+        android:background="@drawable/rectangle_purple"
         android:fontFamily="@font/poppins_extrabold"
         android:text="Alege cuvântul care se potrivește imaginii de mai jos:"
         android:textColor="#fff"
+        android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintVertical_bias="0.083"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
 
     <ImageButton
@@ -44,11 +47,12 @@
         android:layout_height="167dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.244"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/ic_launcher"
+        />
 
     <Button
         android:id="@+id/firstOption"
@@ -63,7 +67,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623" />
+        app:layout_constraintVertical_bias="0.623"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <Button
         android:id="@+id/secondOption"
@@ -78,7 +83,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.731" />
+        app:layout_constraintVertical_bias="0.731"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <Button
         android:id="@+id/thirdOption"
@@ -93,14 +99,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.832" />
 
     <TextView
         android:id="@+id/imageResultText"
         android:layout_width="277dp"
-        android:layout_height="63dp"
+        android:layout_height="35dp"
         android:layout_margin="3pt"
-        android:layout_marginStart="3pt"
+       android:fontFamily="@font/poppins_extrabold"
         android:autoText="true"
         android:background="#E6B266"
         android:text="TextView"
@@ -110,7 +117,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <TextView
         android:id="@+id/questionNo"
@@ -120,9 +128,11 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
+        android:fontFamily="@font/poppins_extrabold"
+        android:textColor="#4D1D70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.932" />

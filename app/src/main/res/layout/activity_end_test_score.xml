@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EndTestScore">
+    tools:context=".EndTestScore"
+    android:background="@drawable/bg_gradient">
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,8 +29,11 @@
         android:fontFamily="@font/poppins_extrabold"
         android:text="Felicitări! Testul s-a terminat."
         android:textAlignment="center"
+        android:textColor="#584067"
         android:textSize="40dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,8 +45,10 @@
         android:fontFamily="@font/poppins_extrabold"
         android:text="Scor Final:"
         android:textAlignment="center"
+        android:textColor="#584067"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -57,15 +63,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <!--DC NU POT SA PUN CULOARE?? -->
+
 
     <Button
         android:id="@+id/finishButton"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rectangle_pink"
         android:text="Gata"
+        android:textColor="#584067"
+        android:textSize="30sp"
+        android:fontFamily="@font/poppins_extrabold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
