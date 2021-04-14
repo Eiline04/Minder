@@ -2,6 +2,7 @@ package com.technovation.sagetech.minder.quizzez.TestTrueFalse;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.technovation.sagetech.minder.ColorsResources;
 import com.technovation.sagetech.minder.GlobalUtilities;
 import com.technovation.sagetech.minder.R;
 import com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto.WhatIsInPhoto;
@@ -94,6 +96,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
     }
 
 
+    @SuppressLint("ResourceAsColor")
     private void buttonListener(View view) {
 
         GlobalUtilities.setTwoClickableFalse(trueBtn, falseBtn);
@@ -103,7 +106,10 @@ public class Test1_TrueFalse extends AppCompatActivity {
 
         resultText.setVisibility(View.VISIBLE);
         resultText.setBackgroundColor(isCorrect ? Color.GREEN : Color.RED);
-        resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+        //resultText.setBackgroundColor(isCorrect ? ColorsResources.TRUE_GREEN : ColorsResources.FALSE_RED);
+        resultText.setTextColor(isCorrect ? ColorsResources.TRUE_GREEN : ColorsResources.FALSE_RED);
+        //resultText.setText(isCorrect ? "Corect!" : "Gresit!");
+        resultText.setText(isCorrect ? getString(R.string.correctAnswer) : getString(R.string.falseAnswer));
         if(isCorrect) GlobalUtilities.increaseScore();
 
         localQuestionIndex += 1;

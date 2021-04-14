@@ -72,21 +72,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.674" />
 
-   <!-- <Button
-        android:id="@+id/nuStiuBtnAsauF"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/nu_stiu"
-        android:text="Nu stiu"
-        android:fontFamily="@font/poppins_extrabold"
-        android:textColor="#2D0970"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />-->
 
     <TextView
         android:id="@+id/resultText"
@@ -96,7 +81,7 @@
         android:gravity="center"
         android:layout_marginBottom="424dp"
         android:autoText="true"
-        android:background="#D36A6A"
+        android:background = "@drawable/rectangle_purple_stroke"
         android:text="TextView"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
