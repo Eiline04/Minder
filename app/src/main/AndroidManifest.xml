@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,12 +19,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="ExtraText">
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />
 
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
 
+        <activity
+            android:name=".Animation"
+            android:label="@string/title_activity_animation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
         <activity android:name=".Intro" />
         <activity android:name=".quizzez.TestWhatIsInPhoto.WhereIsUsed" />
         <activity android:name=".IntroductionMap" />
@@ -47,12 +67,6 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
-        activity android:name="info.androidhive.introslider.WelcomeActivity">
-
     </application>
-
-
-
 
 </manifest>
