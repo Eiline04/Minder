@@ -48,7 +48,8 @@ public class StoreUserData extends AppCompatActivity {
 
     private ImageView userImage;
     private EditText photoNameEditText;
-    private Button submit, showAllBtn,toMainReturn;
+    private Button submit;
+    private Button toMainReturn;
 
     private ProgressDialog progressDialog;
     //Variables for the images
@@ -67,7 +68,6 @@ public class StoreUserData extends AppCompatActivity {
         userImage = findViewById(R.id.user_image);
         photoNameEditText = findViewById(R.id.photo_name);
         submit = findViewById(R.id.submit);
-        showAllBtn = findViewById(R.id.show_Allphoto);
         toMainReturn = findViewById(R.id.fromSUDtoMain);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -78,8 +78,6 @@ public class StoreUserData extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
-
-        showAllBtn.setOnClickListener(v -> startActivity( new Intent(StoreUserData.this , ShowPhotoActivity.class)));
 
         //-------------Return to MainActivity--------------------
         toMainReturn.setOnClickListener(v -> startActivity( new Intent(StoreUserData.this , MainActivity.class)));
@@ -165,7 +163,8 @@ public class StoreUserData extends AppCompatActivity {
 
         Uri download_uri;
         if (task != null) {
-            download_uri = task.getResult().getDownloadUrl();
+            //download_uri = task.getResult().getDownloadUrl();
+            download_uri = task.getResult().getUploadSessionUri();
         } else {
             download_uri = imageUri; // imageUri getImageUri()
         }
