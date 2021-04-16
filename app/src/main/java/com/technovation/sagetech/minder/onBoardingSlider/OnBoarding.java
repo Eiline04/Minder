@@ -63,7 +63,7 @@ public class OnBoarding extends AppCompatActivity {
         viewPager.addOnPageChangeListener(changeListener);
     }
 
-    public void skip(View view) {
+    public void skipOrStart(View view) {
         if (current_user_id == null) {
             startActivity(new Intent(OnBoarding.this, LoginActivity.class));
 
@@ -107,6 +107,8 @@ public class OnBoarding extends AppCompatActivity {
             addDots(position);
             currentPos = position;
 
+            letsGetStarted.setClickable(false);
+
             if (position == 0) {
                 letsGetStarted.setVisibility(View.INVISIBLE);
             } else if (position == 1) {
@@ -115,6 +117,8 @@ public class OnBoarding extends AppCompatActivity {
                 animation = AnimationUtils.loadAnimation(OnBoarding.this, R.anim.bottom_animation);
                 letsGetStarted.setAnimation(animation);
                 letsGetStarted.setVisibility(View.VISIBLE);
+                letsGetStarted.setClickable(true);
+                letsGetStarted.setOnClickListener(v -> skipOrStart(letsGetStarted));
             }
 
         }

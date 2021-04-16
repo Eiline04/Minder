@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c7b8e0"
+    android:background="#F6DEF3"
     tools:context=".LogoScreen">
 
     <ImageView
@@ -23,11 +23,10 @@
         android:id="@+id/minderLogoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/playball_regular"
+        android:fontFamily="@font/kurale_regular"
         android:text="Minder"
         android:textAlignment="center"
         android:textSize="95dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

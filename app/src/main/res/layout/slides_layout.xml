@@ -7,21 +7,22 @@
 
     <ImageView
         android:id="@+id/familyImageOnboarding"
-        android:layout_width="387dp"
-        android:layout_height="437dp"
+        android:layout_width="382dp"
+        android:layout_height="450dp"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045"
+        app:layout_constraintVertical_bias="0.02"
         app:srcCompat="@drawable/family_picture" />
 
     <TextView
         android:id="@+id/slidesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_extrabold"
+        android:fontFamily="@font/kurale_regular"
+        android:gravity="center"
         android:text="TextView"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -43,7 +44,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/familyImageOnboarding"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.128" />
 </androidx.constraintlayout.widget.ConstraintLayout>
