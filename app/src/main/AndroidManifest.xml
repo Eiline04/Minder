@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".localNotifications.MainNotificationActivity"></activity>
+        <activity android:name=".localNotifications.MainNotificationActivity"/>
         <activity android:name=".EndTestScore" />
         <activity android:name=".quizzez.TestWhatIsInPhoto.WhereIsUsed" />
         <activity android:name=".IntroductionMap" />
