@@ -49,7 +49,7 @@
             android:fontFamily="@font/kurale_regular"
             android:textSize="15dp"
             android:text="@string/hai_sa_incepem"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:clickable="false"
             android:onClick="skipOrStart"/>
 
