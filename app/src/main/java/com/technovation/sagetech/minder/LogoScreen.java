@@ -3,6 +3,7 @@ package com.technovation.sagetech.minder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.technovation.sagetech.minder.authentication.LoginActivity;
+import com.technovation.sagetech.minder.onBoardingSlider.OnBoarding;
 
 public class LogoScreen extends AppCompatActivity {
 
@@ -22,6 +24,8 @@ public class LogoScreen extends AppCompatActivity {
     private Animation topAnimation;
     private Animation bottomAnimation;
     private static int SPLASH_SCREEN_DURATION = 2000;
+
+    private SharedPreferences onBoardingScreen;
 
     private ImageView benjieImage;
     private TextView minderText;
@@ -51,13 +55,35 @@ public class LogoScreen extends AppCompatActivity {
         benjieImage.setAnimation(topAnimation);
 
         new Handler().postDelayed(() -> {
-            if (current_user_id == null) {
-                startActivity(new Intent(LogoScreen.this, LoginActivity.class));
 
-            } else {
-                startActivity(new Intent(LogoScreen.this, MainActivity.class));
-            }
-            finish();
+            onBoardingScreen = getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
+
+            boolean isFirstTime = onBoardingScreen.getBoolean("firstTime",true);
+
+            startActivity(new Intent(LogoScreen.this, OnBoarding.class));
+                 finish();
+
+//            if(isFirstTime){
+//
+//                SharedPreferences.Editor editor = onBoardingScreen.edit();
+//                editor.putBoolean("firstTime",false);
+//                editor.commit();
+//
+//                startActivity(new Intent(LogoScreen.this, OnBoarding.class));
+//                 finish();
+//
+//            }else {
+//                if (current_user_id == null) {
+//                    startActivity(new Intent(LogoScreen.this, LoginActivity.class));
+//
+//                } else {
+//                    startActivity(new Intent(LogoScreen.this, MainActivity.class));
+//                }
+//                finish();
+//
+//            }
+
+
         }, SPLASH_SCREEN_DURATION);
     }
 }
