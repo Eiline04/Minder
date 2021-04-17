@@ -38,20 +38,21 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@drawable/rectangle_purple"
+            android:background="#FF9076BA"
             android:layout_marginBottom="30dp"/>
 
         <EditText
             android:id="@+id/emailFiled"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="  Introduceți o Adresa de Email"
+            android:hint="Introduceți o Adresa de Email"
+            android:paddingStart="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textColor="#fff"
             android:textStyle="bold"
             android:textColorHint="#fff"
-            android:background="#533A7B"
+            android:background="#FF9076BA"
             android:inputType="textEmailAddress"
             />
         <EditText
@@ -59,13 +60,14 @@
             android:id="@+id/passwordFiled"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="  Setați o parolă"
+            android:hint="Setați o parolă"
+            android:paddingStart="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textColor="#fff"
             android:textStyle="bold"
             android:textColorHint="#fff"
-            android:background="#533A7B"
+            android:background="#FF9076BA"
             android:ems="10"
             android:inputType="textPassword"/>
         <EditText
@@ -73,13 +75,14 @@
             android:id="@+id/repasswordFiled"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="  Confirmați parola"
+            android:hint="Confirmați parola"
+            android:paddingStart="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textColor="#fff"
             android:textStyle="bold"
             android:textColorHint="#fff"
-            android:background="#533A7B"
+            android:background="#FF9076BA"
             android:inputType="textPassword"/>
 
         <Button
