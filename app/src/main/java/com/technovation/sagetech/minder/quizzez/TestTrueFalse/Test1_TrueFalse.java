@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +65,6 @@ public class Test1_TrueFalse extends AppCompatActivity {
         resultText = findViewById(R.id.resultText);
         loadingWidget = findViewById(R.id.loadingProgress);
 
-
         setVisibilityForAll(View.INVISIBLE);
 
         //------------Click Listener for the TRUE button
@@ -77,7 +77,7 @@ public class Test1_TrueFalse extends AppCompatActivity {
         setVisibilityForAll(View.VISIBLE);
         if (task.isSuccessful()) {
 
-            Toast.makeText(Test1_TrueFalse.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Test1_TrueFalse.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
 
             questions = task.getResult().getData().entrySet().stream()
                     .map(entry -> new TrueFalseQuestion(entry.getKey(), String.valueOf(entry.getValue()).equals("true")))

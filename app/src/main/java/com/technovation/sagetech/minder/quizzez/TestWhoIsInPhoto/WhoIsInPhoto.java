@@ -73,12 +73,6 @@ public class WhoIsInPhoto extends AppCompatActivity {
         questionTextView = findViewById(R.id.instructionsTextView);
         resultText = findViewById(R.id.imageResultText);
 
-        /** --needs to be tested
-        // Get the Drawable custom_progressbar
-        Drawable draw = getDrawable(R.drawable.custom_progress_bar);
-        // set the drawable as progress drawable
-        loadingWidget.setBackground(draw);**/
-
         resultText.setVisibility(View.INVISIBLE);
         setVisibilityForAll(View.INVISIBLE);
 

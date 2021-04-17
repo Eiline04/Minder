@@ -84,7 +84,7 @@ public class WhatIsInPhoto extends AppCompatActivity {
     private void onLoadData(Task<DocumentSnapshot> task) {
         if (task.isSuccessful()) {
 
-            Toast.makeText(WhatIsInPhoto.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(WhatIsInPhoto.this, "Datele au fost obtinute cu succes", Toast.LENGTH_SHORT).show();
 
             questions = new ArrayList<>();
             for (Map.Entry<String, Object> entry : task.getResult().getData().entrySet()) {
