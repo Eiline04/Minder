@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".onBoardingSlider.OnBoarding"
     android:padding="20dp"
-    android:background="#F6DEF3">
+    android:background="#F3E5F1">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider"
