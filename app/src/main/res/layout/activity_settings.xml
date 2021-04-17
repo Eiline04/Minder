@@ -4,31 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity"
-    android:background="@drawable/bg_gradient">
+    android:background="#FFF3E5F1"
+    tools:context=".SettingsActivity">
+
+
+    <ImageView
+        android:id="@+id/bubbleImageTL4"
+        android:layout_width="40dp"
+        android:layout_height="57dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.778"
+        app:srcCompat="@drawable/gradient_pink_blue" />
 
     <Button
         android:id="@+id/signOutButton"
-        android:layout_width="279dp"
-        android:layout_height="51dp"
-        android:background="@drawable/rectangle_purple_stroke"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/degrade_rectangular_pink"
         android:fontFamily="@font/poppins_extrabold"
         android:text="Deconectare"
-        android:textColor="#F53E0202"
+        android:textAllCaps="false"
+        android:textColor="#FFDBFB"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintVertical_bias="0.596" />
 
     <Button
         android:id="@+id/toStoreUDBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_purple_round"
+        android:background="@drawable/degrade_rectangular_pink"
         android:fontFamily="@font/poppins_extrabold"
         android:text="  Adaugă imagini  "
+        android:textAllCaps="false"
+        android:textColor="#FFDBFB"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/show_Allphoto"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/degrade_rectangular_pink"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="Imagini incărcate"
+        android:textAllCaps="false"
         android:textColor="#FFDBFB"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,33 +69,16 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
-
-    <Button
-        android:id="@+id/show_Allphoto"
-        android:layout_width="236dp"
-        android:layout_height="54dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/rectangle_purple_round"
-        android:fontFamily="@font/poppins_extrabold"
-        android:text="Imagini incărcate"
-        android:textAllCaps="false"
-        android:textColor="#FFDBFB"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.725" />
+        app:layout_constraintVertical_bias="0.701" />
 
     <Button
         android:id="@+id/alarmSettings"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_purple_round"
+        android:background="@drawable/degrade_rectangular_pink"
         android:fontFamily="@font/poppins_extrabold"
         android:text="Configurare alarmă"
+        android:textAllCaps="false"
         android:textColor="#FFDBFB"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,6 +86,54 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintVertical_bias="0.404" />
+
+    <ImageView
+        android:id="@+id/bubbleImageTL"
+        android:layout_width="230dp"
+        android:layout_height="213dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063"
+        app:srcCompat="@drawable/gradient_pink_blue" />
+
+    <ImageView
+        android:id="@+id/brainSettingsImage"
+        android:layout_width="220dp"
+        android:layout_height="211dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.113"
+        app:srcCompat="@drawable/benji_logo" />
+
+    <ImageView
+        android:id="@+id/bubbleImageTL3"
+        android:layout_width="135dp"
+        android:layout_height="155dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.797"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.945"
+        app:srcCompat="@drawable/gradient_pink_blue" />
+
+    <ImageView
+        android:id="@+id/bubbleImageTL2"
+        android:layout_width="83dp"
+        android:layout_height="115dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.948"
+        app:srcCompat="@drawable/gradient_pink_blue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

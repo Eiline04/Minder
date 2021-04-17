@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.technovation.sagetech.minder.localNotifications.AlarmReceiver;
 import com.technovation.sagetech.minder.quizzez.TestTrueFalse.Test1_TrueFalse;
@@ -16,7 +17,7 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startBtn;
+    private ImageButton startBtn;
     private Button settings;
     private Button tutorials;
 
