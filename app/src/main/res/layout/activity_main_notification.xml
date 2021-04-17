@@ -4,29 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF3E5F1"
     tools:context=".localNotifications.MainNotificationActivity">
+
     <TextView
         android:id="@+id/nextAlarmTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/timePickerButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="No Alarm set"
-        android:textSize="30sp" />
+        android:layout_marginBottom="120dp"
+        android:background="#F3DEF0"
+        android:fontFamily="@font/kurale_regular"
+        android:text="Nicio alarmă setată"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/timePickerButton"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/degrade_rectangular_pink"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="open time picker" />
+        android:text="Alege ora"
+        android:fontFamily="@font/kurale_regular"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        />
+
     <Button
         android:id="@+id/cancelAlarmButton"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timePickerButton"
+        android:background="@drawable/degrade_rectangular_pink"
+        android:fontFamily="@font/kurale_regular"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Șterge alarma"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="cancel alarm" />
+        android:layout_below="@+id/timePickerButton"
+        android:layout_marginTop="30dp"/>
+
+    <ImageView
+        android:id="@+id/notificationsImage"
+        android:layout_width="230dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/cancelAlarmButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        app:srcCompat="@drawable/notification_image" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:rotationX="-180"
+        app:srcCompat="@drawable/semisfera" />
 </RelativeLayout>
