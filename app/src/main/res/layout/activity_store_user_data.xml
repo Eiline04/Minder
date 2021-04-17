@@ -6,45 +6,48 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-
-    android:background="@drawable/bg_gradient"
+android:padding="20dp"
+    android:background="#FFF3E5F1"
     tools:context=".authentication.StoreUserData">
 
     <ImageView
         android:id="@+id/user_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/img"
+        android:src="@mipmap/add_photo_icon"
+        android:layout_marginBottom="40dp"
         />
 
     <EditText
         android:id="@+id/photo_name"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
-        android:hint="Nume fotografie"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="10dp"
+        android:hint="Numele fotografiei"
         android:inputType="textPersonName"
         android:textColor="#000"
         android:textStyle="bold" />
-    
+
     <Button
         android:id="@+id/submit"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/rectangle_purple_round"
         android:fontFamily="@font/poppins_extrabold"
-        android:text="adaugă"
-        android:textAllCaps="true"
+        android:text="Adaugă"
+        android:textAllCaps="false"
         android:textColor="#FFDBFB"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -54,15 +57,15 @@
 
         <Button
             android:id="@+id/fromSUDtoMain"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/rectangle_purple_stroke"
             android:fontFamily="@font/poppins_extrabold"
-            android:text="înapoi la pagina principală"
+            android:text="Înapoi la pagina principală"
             android:textAllCaps="false"
-            android:textColor="#5F4092"
-            android:textSize="15sp" />
+            android:textColor="#926DBC"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

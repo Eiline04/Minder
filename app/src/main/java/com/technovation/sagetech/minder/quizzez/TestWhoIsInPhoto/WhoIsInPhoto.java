@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -72,8 +73,15 @@ public class WhoIsInPhoto extends AppCompatActivity {
         questionTextView = findViewById(R.id.instructionsTextView);
         resultText = findViewById(R.id.imageResultText);
 
+        /** --needs to be tested
+        // Get the Drawable custom_progressbar
+        Drawable draw = getDrawable(R.drawable.custom_progress_bar);
+        // set the drawable as progress drawable
+        loadingWidget.setBackground(draw);**/
+
         resultText.setVisibility(View.INVISIBLE);
         setVisibilityForAll(View.INVISIBLE);
+
         //-------------------The buttons Listeners----------------
         firstImage.setOnClickListener(view -> buttonListener((View) view));
         secondImage.setOnClickListener(view -> buttonListener((View) view));

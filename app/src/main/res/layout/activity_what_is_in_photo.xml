@@ -4,128 +4,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto">
+    tools:context=".quizzez.TestWhatIsInPhoto.WhatIsInPhoto"
+    android:background="#FFF3E5F1">
 
-
-    <ProgressBar
-        android:id="@+id/loadingProgress"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="303dp"
-        android:layout_height="336dp"
-        android:layout_marginTop="217dp"
-        android:layout_marginBottom="178dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/questionFinalTextView"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rectangle_purple_round"
-        android:fontFamily="@font/poppins_extrabold"
-        android:text="Alege cuvântul care se potrivește imaginii de mai jos:"
-        android:textColor="#fff"
-        android:textSize="18sp"
+        android:id="@+id/imageResultText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:autoText="true"
+        android:background="#E6B266"
+        android:fontFamily="@font/kurale_regular"
+        android:text="răspuns"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
-
+        app:layout_constraintVertical_bias="0.59" />
 
     <ImageButton
         android:id="@+id/firstObjectWhatIsImage"
-        android:layout_width="242dp"
-        android:layout_height="167dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244"
+        app:layout_constraintVertical_bias="0.355"
         app:srcCompat="@mipmap/ic_launcher" />
-
-    <Button
-        android:id="@+id/firstOption"
-        android:layout_width="277dp"
-        android:layout_height="53dp"
-        android:background="@drawable/adevarat"
-        android:fontFamily="@font/poppins_extrabold"
-        android:text="Prima optiune"
-        android:textColor="#117106"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623" />
 
     <Button
         android:id="@+id/secondOption"
         android:layout_width="277dp"
         android:layout_height="52dp"
-        android:background="@drawable/adevarat"
+        android:background="@drawable/degrade_rectangular_pink"
         android:fontFamily="@font/poppins_extrabold"
         android:text="A doua optiune"
-        android:textColor="#117106"
+        android:textColor="#FFF3E5F1"
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.731" />
+        app:layout_constraintVertical_bias="0.818" />
 
     <Button
         android:id="@+id/thirdOption"
         android:layout_width="277dp"
         android:layout_height="52dp"
-        android:background="@drawable/adevarat"
+        android:background="@drawable/degrade_rectangular_pink"
         android:fontFamily="@font/poppins_extrabold"
         android:text="A treia optiune"
-        android:textColor="#117106"
+        android:textColor="#FFF3E5F1"
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.832" />
+        app:layout_constraintVertical_bias="0.919" />
 
     <TextView
-        android:id="@+id/imageResultText"
-        android:layout_width="277dp"
-        android:layout_height="63dp"
-        android:layout_margin="3pt"
-        android:layout_marginStart="3pt"
-        android:autoText="true"
-        android:background="#E6B266"
-        android:text="TextView"
+        android:id="@+id/questionFinalTextView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kurale_regular"
+        android:text="Alege cuvântul care se potrivește imaginii de mai jos:"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#FF533A7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.154" />
+
+    <Button
+        android:id="@+id/firstOption"
+        android:layout_width="277dp"
+        android:layout_height="53dp"
+        android:background="@drawable/degrade_rectangular_pink"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="Prima optiune"
+        android:textColor="#FFF3E5F1"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71" />
+
+    <ProgressBar
+        android:id="@+id/loadingProgress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="208dp"
+        android:progressDrawable="@drawable/custom_progress_bar"
+        app:layout_constraintBottom_toTopOf="@+id/secondImageBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/questionNo"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Numarul intrebarii"
+        android:fontFamily="@font/kurale_regular"
+        android:hint="intrebarea curenta"
+        android:text="index"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#FF533A7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932" />
+        app:layout_constraintVertical_bias="0.082" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

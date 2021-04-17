@@ -163,10 +163,9 @@ public class StoreUserData extends AppCompatActivity {
 
         Uri download_uri;
         if (task != null) {
-            //download_uri = task.getResult().getDownloadUrl();
             download_uri = task.getResult().getUploadSessionUri();
         } else {
-            download_uri = imageUri; // imageUri getImageUri()
+            download_uri = imageUri;
         }
 
 
@@ -184,7 +183,7 @@ public class StoreUserData extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(StoreUserData.this, "Datele au fost salvate cu succes", Toast.LENGTH_SHORT).show();
 
-                    userImage.setImageResource(R.drawable.ic_launcher_background);
+                    userImage.setImageResource(R.drawable.add_photo);
                     photoNameEditText.setText(null);
                     photoNameEditText.setHint("Denumirea pozei");
 

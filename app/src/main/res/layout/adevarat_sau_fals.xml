@@ -5,118 +5,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
-
-
+    android:background="#FFF3E5F1">
 
     <TextView
         android:id="@+id/numarIntrebare_AsauF"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:fontFamily="@font/kurale_regular"
+        android:hint="intrebarea curenta"
+        android:text="index"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#FF533A7B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
-        android:fontFamily="@font/poppins_extrabold"
-        android:textSize="20sp"
-        android:textColor="#FF533A7B"/>
+        app:layout_constraintVertical_bias="0.082"/>
 
     <TextView
         android:id="@+id/intrebareTextView_AsauF"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:gravity="center"
+        android:fontFamily="@font/kurale_regular"
+        android:text="Alege cuvântul care se potrivește imaginii de mai jos:"
+        android:textAlignment="center"
+        android:textColor="#FF533A7B"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255"
-        android:fontFamily="@font/poppins_extrabold"
-        android:textSize="30sp"
-        android:textColor="#FF533A7B"/>
+        app:layout_constraintVertical_bias="0.235" />
 
     <Button
         android:id="@+id/trueBtn"
-        android:layout_width="150dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/adevarat"
-        android:text="Adevarat"
         android:fontFamily="@font/poppins_extrabold"
+        android:text="Adevarat"
         android:textColor="#117106"
-        android:textSize="19sp"
+        android:textSize="20sp"
+        android:textStyle=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <Button
         android:id="@+id/falseBtn"
-        android:layout_width="150dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/fals"
-        android:text="Fals"
         android:fontFamily="@font/poppins_extrabold"
+        android:text="Fals"
         android:textColor="#780404"
         android:textSize="19sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.674" />
-
-   <!-- <Button
-        android:id="@+id/nuStiuBtnAsauF"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/nu_stiu"
-        android:text="Nu stiu"
-        android:fontFamily="@font/poppins_extrabold"
-        android:textColor="#2D0970"
-        android:textSize="19sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />-->
-
-    <TextView
-        android:id="@+id/resultText"
-        android:layout_width="259dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="59.5dp"
-        android:layout_marginTop="275dp"
-        android:layout_marginEnd="59.5dp"
-        android:layout_marginBottom="424dp"
-        android:autoText="true"
-        android:background="#D36A6A"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.778" />
 
     <ProgressBar
         android:id="@+id/loadingProgress"
         style="?android:attr/progressBarStyle"
-        android:layout_width="303dp"
-        android:layout_height="336dp"
-        android:layout_marginTop="217dp"
-        android:layout_marginBottom="178dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="208dp"
+        android:progressDrawable="@drawable/custom_progress_bar"
+        app:layout_constraintBottom_toTopOf="@+id/secondImageBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:autoText="true"
+        android:background="#E6B266"
+        android:fontFamily="@font/kurale_regular"
+        android:text="răspuns"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.474" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
