@@ -12,6 +12,22 @@
     <string name="am_deja_un_cont_login">Am deja un cont. Login</string>
     <string name="brain">brain</string>
     <string name="creeaza_cont_nou">Creează cont nou</string>
+    <string name="hai_sa_incepem">Hai să începem!</string>
+
+
+    <!--000000000000000000000000//OnBoarding Strings//000000000000000000000000000000-->
+    <!--00000000//OnBoarding Titles//000000000-->
+    <string name="firstSlideTitle">Încarcă imagini</string>
+    <string name="secondSlideTitle">Răspunde la întrebări</string>
+    <string name="thirdSlideTitle">Amintește-ți cum să…</string>
+    <!--00000000//OnBoarding Descriptions//000000000-->
+    <string name="firstSlideDescription">Folosește Minder pentru a-ți personaliza testele, adăugând poze cu cei dragi.
+        Astfel, îți vei antrena memoria și îți vei aminti de lucrurile pe care le iubesti.</string>
+    <string name="secondSlideDescription">Încearcă să potrivești imagini cu denumirea lor
+        sau cu activitățile unde se utilizează!</string>
+    <string name="thirdSlideDescription">Urmărește tutoriale special creeate pentru a te ajuta
+        să îndeplinești activități din vița de zi cu zi.</string>
+
 
     <string name="correctAnswer">Răspuns corect!</string>
     <string name="falseAnswer">Răspuns greșit!</string>

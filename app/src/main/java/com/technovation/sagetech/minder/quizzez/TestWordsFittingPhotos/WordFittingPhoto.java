@@ -170,7 +170,7 @@ public class WordFittingPhoto extends AppCompatActivity {
             }
         }
         combinare.size();
-        Collections.shuffle(combinare, new Random(System.currentTimeMillis()));
+        Collections.shuffle(combinare, new Random(System.currentTimeMillis()*System.currentTimeMillis()));
         return combinare;
     }
 

@@ -2,15 +2,23 @@ package com.technovation.sagetech.minder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.technovation.sagetech.minder.localNotifications.AlarmReceiver;
 import com.technovation.sagetech.minder.quizzez.TestTrueFalse.Test1_TrueFalse;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startBtn, settings;
+    private Button startBtn;
+    private Button settings;
+    private Button tutorials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startBtn);
         settings = findViewById(R.id.settings);
+        tutorials = findViewById(R.id.tutorials);
 
         //------------Start Test1_TrueFalse Activity---------------
         startBtn.setOnClickListener(v -> {
@@ -31,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         //------------Start SettingsActivity---------------
         settings.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+        });
+
+        //------------Start SettingsActivity---------------
+        tutorials.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, VideoTutorials.class));
         });
     }
 

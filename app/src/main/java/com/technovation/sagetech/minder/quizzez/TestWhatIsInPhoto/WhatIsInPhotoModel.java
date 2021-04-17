@@ -1,9 +1,11 @@
 package com.technovation.sagetech.minder.quizzez.TestWhatIsInPhoto;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class WhatIsInPhotoModel {
 
@@ -16,9 +18,11 @@ public class WhatIsInPhotoModel {
     public WhatIsInPhotoModel(String photoUri, ArrayList<Objects> optionsArray) {
         this.photoUri = photoUri;
         answer = optionsArray.get(Integer.parseInt(String.valueOf(optionsArray.get(0))));
-        firstOption = String.valueOf(optionsArray.get(1));
-        secondOption = String.valueOf(optionsArray.get(2));
-        thirdOption = String.valueOf(optionsArray.get(3));
+        optionsArray.remove(0);
+        Collections.shuffle(optionsArray, new Random(System.currentTimeMillis()*System.currentTimeMillis()));
+        firstOption = String.valueOf(optionsArray.get(0));
+        secondOption = String.valueOf(optionsArray.get(1));
+        thirdOption = String.valueOf(optionsArray.get(2));
     }
 
 

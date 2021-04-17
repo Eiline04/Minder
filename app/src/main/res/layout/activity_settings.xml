@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/signOutButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="279dp"
+        android:layout_height="51dp"
         android:background="@drawable/rectangle_purple_stroke"
         android:fontFamily="@font/poppins_extrabold"
         android:text="Deconectare"
@@ -18,10 +18,9 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.597" />
+        app:layout_constraintVertical_bias="0.554" />
 
     <Button
         android:id="@+id/toStoreUDBtn"
@@ -34,9 +33,43 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.621"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.453" />
+        app:layout_constraintVertical_bias="0.426" />
+
+    <Button
+        android:id="@+id/show_Allphoto"
+        android:layout_width="236dp"
+        android:layout_height="54dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/rectangle_purple_round"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="Imagini incărcate"
+        android:textAllCaps="false"
+        android:textColor="#FFDBFB"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.725" />
+
+    <Button
+        android:id="@+id/alarmSettings"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_purple_round"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="Configurare alarmă"
+        android:textColor="#FFDBFB"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.282" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
