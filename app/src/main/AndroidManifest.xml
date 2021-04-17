@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".localNotifications.MainNotificationActivity"/>
+        <activity android:name=".VideoTutorials"></activity>
+        <activity android:name=".localNotifications.MainNotificationActivity" />
         <activity android:name=".EndTestScore" />
         <activity android:name=".quizzez.TestWhatIsInPhoto.WhereIsUsed" />
         <activity android:name=".onBoardingSlider.OnBoarding" />
@@ -27,7 +28,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".authentication.SignUpActivity" />
         <activity android:name=".authentication.LoginActivity" />
-        <activity android:name=".LogoScreen"
+        <activity
+            android:name=".LogoScreen"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +41,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
-        <receiver android:name=".localNotifications.AlarmReceiver"/>
-
+        <receiver android:name=".localNotifications.AlarmReceiver" />
     </application>
 
 </manifest>

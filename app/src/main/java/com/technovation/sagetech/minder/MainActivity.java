@@ -16,7 +16,9 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startBtn, settings;
+    private Button startBtn;
+    private Button settings;
+    private Button tutorials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startBtn);
         settings = findViewById(R.id.settings);
+        tutorials = findViewById(R.id.tutorials);
 
         //------------Start Test1_TrueFalse Activity---------------
         startBtn.setOnClickListener(v -> {
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         });
 
+        //------------Start SettingsActivity---------------
+        tutorials.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, VideoTutorials.class));
+        });
     }
 
 
