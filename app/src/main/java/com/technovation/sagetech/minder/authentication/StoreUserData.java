@@ -52,13 +52,15 @@ public class StoreUserData extends AppCompatActivity {
     private Button toMainReturn;
 
     private ProgressDialog progressDialog;
-    //Variables for the images
+
     private Uri imageUri = null;
+    private String user_id;
+    private Bitmap compressed;
+
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    private String user_id;
-    private Bitmap compressed;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

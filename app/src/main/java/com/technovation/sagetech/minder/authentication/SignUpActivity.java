@@ -21,8 +21,13 @@ import com.technovation.sagetech.minder.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText emailFiled, passwordFiled, checkPasswordFiled;
-    private Button register, signIn;
+    private EditText emailFiled;
+    private EditText passwordFiled;
+    private EditText checkPasswordFiled;
+
+    private Button register;
+    private Button signIn;
+
     private FirebaseAuth mAth;
 
     @Override
@@ -32,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         getWindow() .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //HOOKS
         emailFiled = findViewById(R.id.emailFiled);
         passwordFiled = findViewById(R.id.passwordFiled);
         checkPasswordFiled = findViewById(R.id.repasswordFiled);

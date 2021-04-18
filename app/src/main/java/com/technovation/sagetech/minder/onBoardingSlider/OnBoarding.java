@@ -25,14 +25,13 @@ public class OnBoarding extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String current_user_id;
 
-    //Variables
-    ViewPager viewPager;
-    LinearLayout dotsLayout;
-    SliderAdapter sliderAdapter;
-    TextView[] dots;
-    Button letsGetStarted;
-    Animation animation;
-    int currentPos;
+    private ViewPager viewPager;
+    private LinearLayout dotsLayout;
+    private SliderAdapter sliderAdapter;
+    private TextView[] dots;
+    private Button letsGetStarted;
+    private Animation animation;
+    private int currentPos;
 
     @Override
     protected void onStart() {

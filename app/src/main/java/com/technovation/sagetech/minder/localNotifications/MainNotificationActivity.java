@@ -30,25 +30,20 @@ public class MainNotificationActivity extends AppCompatActivity implements TimeP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_notification);
 
+        //HOOKS
         alarmInfoTextView = findViewById(R.id.nextAlarmTextView);
         buttonTimePicker = findViewById(R.id.timePickerButton);
         buttonCancelAlarm = findViewById(R.id.cancelAlarmButton);
 
-        buttonTimePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getSupportFragmentManager(), "time picker");
-            }
+        buttonTimePicker.setOnClickListener(v -> {
+            DialogFragment timePicker = new TimePickerFragment();
+            timePicker.show(getSupportFragmentManager(), "time picker");
         });
 
-        buttonCancelAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelAlarm();
-            }
-        });
+        buttonCancelAlarm.setOnClickListener(v -> cancelAlarm());
     }
+
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar calendarInstance = Calendar.getInstance();
@@ -58,11 +53,13 @@ public class MainNotificationActivity extends AppCompatActivity implements TimeP
         updateTimeText(calendarInstance);
         startAlarm(calendarInstance);
     }
+
     private void updateTimeText(Calendar c) {
         String timeText = "Următoarea notificare va fi la ora: ";
         timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
         alarmInfoTextView.setText(timeText);
     }
+
     private void startAlarm(Calendar calendarInstance) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -72,6 +69,7 @@ public class MainNotificationActivity extends AppCompatActivity implements TimeP
         }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendarInstance.getTimeInMillis(), pendingIntent);
     }
+
     private void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);

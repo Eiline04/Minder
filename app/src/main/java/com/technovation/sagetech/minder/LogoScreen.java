@@ -60,29 +60,29 @@ public class LogoScreen extends AppCompatActivity {
 
             boolean isFirstTime = onBoardingScreen.getBoolean("firstTime",true);
 
-            startActivity(new Intent(LogoScreen.this, OnBoarding.class));
+            //----IF !TESTING MODE = MUST BE COMMENTED-------
+//            startActivity(new Intent(LogoScreen.this, OnBoarding.class));
+//                 finish();
+
+            if(isFirstTime){
+
+                SharedPreferences.Editor editor = onBoardingScreen.edit();
+                editor.putBoolean("firstTime",false);
+                editor.commit();
+
+                startActivity(new Intent(LogoScreen.this, OnBoarding.class));
                  finish();
 
-//            if(isFirstTime){
-//
-//                SharedPreferences.Editor editor = onBoardingScreen.edit();
-//                editor.putBoolean("firstTime",false);
-//                editor.commit();
-//
-//                startActivity(new Intent(LogoScreen.this, OnBoarding.class));
-//                 finish();
-//
-//            }else {
-//                if (current_user_id == null) {
-//                    startActivity(new Intent(LogoScreen.this, LoginActivity.class));
-//
-//                } else {
-//                    startActivity(new Intent(LogoScreen.this, MainActivity.class));
-//                }
-//                finish();
-//
-//            }
+            }else {
+                if (current_user_id == null) {
+                    startActivity(new Intent(LogoScreen.this, LoginActivity.class));
 
+                } else {
+                    startActivity(new Intent(LogoScreen.this, MainActivity.class));
+                }
+                finish();
+
+            }
 
         }, SPLASH_SCREEN_DURATION);
     }
